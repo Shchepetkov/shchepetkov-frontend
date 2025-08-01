@@ -1,79 +1,76 @@
 import type { FC } from 'react';
+import { useTranslation } from '../hooks/useTranslation';
 
 const AboutPage: FC = () => {
+  const { t } = useTranslation();
+  
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Заголовок */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            О себе
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Автоматизатор тестирования с 5+ лет опыта в создании надежных и масштабируемых 
-            фреймворков для тестирования
-          </p>
-        </div>
+                            <div className="text-center mb-16">
+                      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        {t('aboutTitle')}
+                      </h1>
+                      <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                        {t('aboutSubtitle')}
+                      </p>
+                    </div>
 
         {/* Биография */}
         <section className="mb-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                Биография
-              </h2>
-              <div className="space-y-4 text-gray-600 dark:text-gray-400">
-                <p>
-                  Я специализируюсь на создании идеальных фреймворков для UI и API тестирования, 
-                  используя лучшие практики и современные технологии Java экосистемы.
-                </p>
-                <p>
-                  Мой подход основан на принципах SOLID архитектуры, чистом коде и модульности. 
-                  Я создаю фреймворки, которые легко масштабируются, поддерживаются и интегрируются 
-                  в CI/CD процессы.
-                </p>
-                <p>
-                  Специализируюсь на Cucumber + Gherkin для BDD, Page Object Model для UI тестирования, 
-                  и REST-assured для API тестирования. Всегда использую Allure для красивой отчетности 
-                  и Log4j2 для логирования.
-                </p>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                Ключевые принципы
-              </h3>
-              <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Чистая архитектура и SOLID принципы
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Модульность и переиспользование кода
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Автоматизация CI/CD процессов
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Подробная документация и отчетность
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  Постоянное обучение новым технологиям
-                </li>
-              </ul>
-            </div>
+                                    <div>
+                          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                            {t('biography')}
+                          </h2>
+                          <div className="space-y-4 text-gray-600 dark:text-gray-400">
+                            <p>
+                              {t('biographyText1')}
+                            </p>
+                            <p>
+                              {t('biographyText2')}
+                            </p>
+                            <p>
+                              {t('biographyText3')}
+                            </p>
+                          </div>
+                        </div>
+                                    <div className="bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 p-8 rounded-2xl">
+                          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                            {t('keyPrinciples')}
+                          </h3>
+                          <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+                            <li className="flex items-center">
+                              <span className="text-green-500 mr-3">✓</span>
+                              {t('principle1')}
+                            </li>
+                            <li className="flex items-center">
+                              <span className="text-green-500 mr-3">✓</span>
+                              {t('principle2')}
+                            </li>
+                            <li className="flex items-center">
+                              <span className="text-green-500 mr-3">✓</span>
+                              {t('principle3')}
+                            </li>
+                            <li className="flex items-center">
+                              <span className="text-green-500 mr-3">✓</span>
+                              {t('principle4')}
+                            </li>
+                            <li className="flex items-center">
+                              <span className="text-green-500 mr-3">✓</span>
+                              {t('principle5')}
+                            </li>
+                          </ul>
+                        </div>
           </div>
         </section>
 
-        {/* Опыт работы */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-            Опыт работы
-          </h2>
+                            {/* Опыт работы */}
+                    <section className="mb-16">
+                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                        {t('workExperience')}
+                      </h2>
           <div className="space-y-8">
             {[
               {
@@ -120,24 +117,24 @@ const AboutPage: FC = () => {
           </div>
         </section>
 
-        {/* Образование */}
-        <section>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-            Образование
-          </h2>
+                            {/* Образование */}
+                    <section>
+                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                        {t('education')}
+                      </h2>
           <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  Бакалавр компьютерных наук
-                </h3>
-                <p className="text-blue-600 dark:text-blue-400">
-                  Московский технический университет
-                </p>
-                <p className="text-gray-600 dark:text-gray-400 mt-2">
-                  Специализация: Программная инженерия и тестирование
-                </p>
-              </div>
+                                      <div>
+                          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                            {t('bachelorDegree')}
+                          </h3>
+                          <p className="text-blue-600 dark:text-blue-400">
+                            {t('university')}
+                          </p>
+                          <p className="text-gray-600 dark:text-gray-400 mt-2">
+                            {t('specialization')}
+                          </p>
+                        </div>
               <span className="text-gray-500 dark:text-gray-400 text-sm md:text-right mt-4 md:mt-0">
                 2015 - 2019
               </span>

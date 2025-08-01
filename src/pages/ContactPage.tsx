@@ -1,7 +1,9 @@
 import type { FC, FormEvent } from 'react';
 import { useState } from 'react';
+import { useTranslation } from '../hooks/useTranslation';
 
 const ContactPage: FC = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,20 +41,20 @@ const ContactPage: FC = () => {
     <div className="min-h-screen py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Заголовок */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Связаться со мной
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Готов к новым проектам и интересным предложениям. Давайте обсудим ваши идеи!
-          </p>
-        </div>
+                            <div className="text-center mb-16">
+                      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        {t('contactTitle')}
+                      </h1>
+                      <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                        {t('contactSubtitle')}
+                      </p>
+                    </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Контактная информация */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
-              Контактная информация
+              {t('contactInfo')}
             </h2>
             
             <div className="space-y-6">
@@ -76,7 +78,7 @@ const ContactPage: FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Локация</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{t('location')}</h3>
                   <p className="text-gray-600 dark:text-gray-400">Москва, Россия</p>
                 </div>
               </div>
@@ -88,8 +90,8 @@ const ContactPage: FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Доступность</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Пн-Пт, 9:00 - 18:00 МСК</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{t('availability')}</h3>
+                  <p className="text-gray-600 dark:text-gray-400">{t('availabilityText')}</p>
                 </div>
               </div>
             </div>
@@ -97,7 +99,7 @@ const ContactPage: FC = () => {
             {/* Социальные сети */}
             <div className="mt-12">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Социальные сети
+                {t('socialNetworks')}
               </h3>
               <div className="flex space-x-4">
                 <a
@@ -137,13 +139,13 @@ const ContactPage: FC = () => {
           {/* Форма обратной связи */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
-              Отправить сообщение
+              {t('sendMessage')}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Имя *
+                  {t('name')} *
                 </label>
                 <input
                   type="text"
@@ -153,13 +155,13 @@ const ContactPage: FC = () => {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="Ваше имя"
+                  placeholder={t('namePlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Email *
+                  {t('email')} *
                 </label>
                 <input
                   type="email"
@@ -169,13 +171,13 @@ const ContactPage: FC = () => {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="your@email.com"
+                  placeholder={t('emailPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Тема
+                  {t('subject')}
                 </label>
                 <input
                   type="text"
@@ -184,13 +186,13 @@ const ContactPage: FC = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="Тема сообщения"
+                  placeholder={t('subjectPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Сообщение *
+                  {t('message')} *
                 </label>
                 <textarea
                   id="message"
@@ -200,7 +202,7 @@ const ContactPage: FC = () => {
                   required
                   rows={5}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
-                  placeholder="Опишите ваш проект или предложение..."
+                  placeholder={t('messagePlaceholder')}
                 />
               </div>
 
@@ -209,18 +211,18 @@ const ContactPage: FC = () => {
                 disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
-                {isSubmitting ? 'Отправка...' : 'Отправить сообщение'}
+                {isSubmitting ? t('sending') : t('sendButton')}
               </button>
 
               {submitStatus === 'success' && (
                 <div className="p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg">
-                  ✅ Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время.
+                  {t('successMessage')}
                 </div>
               )}
 
               {submitStatus === 'error' && (
                 <div className="p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
-                  ❌ Ошибка при отправке. Попробуйте еще раз.
+                  {t('errorMessage')}
                 </div>
               )}
             </form>
