@@ -6,7 +6,6 @@ import AboutPage from './pages/AboutPage';
 import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 import AuthPage from './pages/AuthPage';
-import ProtectedRoute from './components/auth/ProtectedRoute';
 import Footer from './components/layout/Footer';
 
 const App: FC = () => {

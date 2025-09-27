@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
+import Card from '../components/ui/Card';
 
 const AboutPage: FC = () => {
   const { t } = useTranslation();
@@ -19,127 +20,136 @@ const AboutPage: FC = () => {
 
         {/* Биография */}
         <section className="mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                    <div>
-                          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                            {t('biography')}
-                          </h2>
-                          <div className="space-y-4 text-gray-600 dark:text-gray-400">
-                            <p>
-                              {t('biographyText1')}
-                            </p>
-                            <p>
-                              {t('biographyText2')}
-                            </p>
-                            <p>
-                              {t('biographyText3')}
-                            </p>
-                          </div>
-                        </div>
-                                    <div className="bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 p-8 rounded-2xl">
-                          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                            {t('keyPrinciples')}
-                          </h3>
-                          <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-                            <li className="flex items-center">
-                              <span className="text-green-500 mr-3">✓</span>
-                              {t('principle1')}
-                            </li>
-                            <li className="flex items-center">
-                              <span className="text-green-500 mr-3">✓</span>
-                              {t('principle2')}
-                            </li>
-                            <li className="flex items-center">
-                              <span className="text-green-500 mr-3">✓</span>
-                              {t('principle3')}
-                            </li>
-                            <li className="flex items-center">
-                              <span className="text-green-500 mr-3">✓</span>
-                              {t('principle4')}
-                            </li>
-                            <li className="flex items-center">
-                              <span className="text-green-500 mr-3">✓</span>
-                              {t('principle5')}
-                            </li>
-                          </ul>
-                        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <Card title={t('biography')} className="h-fit">
+              <div className="space-y-4 text-gray-600 dark:text-gray-400">
+                <p>
+                  {t('biographyText1')}
+                </p>
+                <p>
+                  {t('biographyText2')}
+                </p>
+                <p>
+                  {t('biographyText3')}
+                </p>
+              </div>
+            </Card>
+            
+            <Card 
+              title={t('keyPrinciples')} 
+              gradient 
+              className="h-fit"
+            >
+              <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-3">✓</span>
+                  {t('principle1')}
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-3">✓</span>
+                  {t('principle2')}
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-3">✓</span>
+                  {t('principle3')}
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-3">✓</span>
+                  {t('principle4')}
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-3">✓</span>
+                  {t('principle5')}
+                </li>
+              </ul>
+            </Card>
           </div>
         </section>
 
-                            {/* Опыт работы */}
-                    <section className="mb-16">
-                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-                        {t('workExperience')}
-                      </h2>
-          <div className="space-y-8">
+        {/* Опыт работы */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            {t('workExperience')}
+          </h2>
+          <div className="space-y-6">
             {[
               {
                 period: '2023 - настоящее время',
                 company: 'TechCorp',
                 position: 'Senior Test Automation Engineer',
-                description: 'Создание фреймворков для UI и API тестирования, интеграция с CI/CD, менторинг команды'
+                description: 'Создание фреймворков для UI и API тестирования, интеграция с CI/CD, менторинг команды',
+                technologies: ['Java', 'Selenium', 'Cucumber', 'REST-assured', 'Jenkins', 'Docker']
               },
               {
                 period: '2021 - 2023',
                 company: 'InnovationLab',
                 position: 'Test Automation Engineer',
-                description: 'Разработка автоматизированных тестов, внедрение Cucumber + Gherkin, создание отчетов Allure'
+                description: 'Разработка автоматизированных тестов, внедрение Cucumber + Gherkin, создание отчетов Allure',
+                technologies: ['Java', 'Selenium', 'Cucumber', 'Allure', 'Maven', 'GitLab CI']
               },
               {
                 period: '2019 - 2021',
                 company: 'StartupXYZ',
                 position: 'QA Engineer',
-                description: 'Ручное тестирование, первые шаги в автоматизации, изучение Selenium WebDriver'
+                description: 'Ручное тестирование, первые шаги в автоматизации, изучение Selenium WebDriver',
+                technologies: ['Manual Testing', 'Selenium', 'Java', 'JUnit', 'TestNG']
               }
             ].map((job, index) => (
-              <div
-                key={index}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <Card key={index} hover className="relative">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                       {job.position}
                     </h3>
-                    <p className="text-blue-600 dark:text-blue-400 font-medium">
+                    <p className="text-blue-600 dark:text-blue-400 font-medium mb-2">
                       {job.company}
                     </p>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                      {job.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {job.technologies.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <span className="text-gray-500 dark:text-gray-400 text-sm md:text-right">
+                  <span className="text-gray-500 dark:text-gray-400 text-sm md:text-right mt-2 md:mt-0 md:ml-4">
                     {job.period}
                   </span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {job.description}
-                </p>
-              </div>
+              </Card>
             ))}
           </div>
         </section>
 
-                            {/* Образование */}
-                    <section>
-                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-                        {t('education')}
-                      </h2>
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+        {/* Образование */}
+        <section>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            {t('education')}
+          </h2>
+          <Card>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                                      <div>
-                          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            {t('bachelorDegree')}
-                          </h3>
-                          <p className="text-blue-600 dark:text-blue-400">
-                            {t('university')}
-                          </p>
-                          <p className="text-gray-600 dark:text-gray-400 mt-2">
-                            {t('specialization')}
-                          </p>
-                        </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  {t('bachelorDegree')}
+                </h3>
+                <p className="text-blue-600 dark:text-blue-400 font-medium mb-2">
+                  {t('university')}
+                </p>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('specialization')}
+                </p>
+              </div>
               <span className="text-gray-500 dark:text-gray-400 text-sm md:text-right mt-4 md:mt-0">
                 2015 - 2019
               </span>
             </div>
-          </div>
+          </Card>
         </section>
       </div>
     </div>
