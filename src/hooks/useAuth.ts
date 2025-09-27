@@ -1,77 +1,113 @@
 import { useState, useEffect } from 'react';
-
-interface User {
-  name: string;
-  email: string;
-}
+import { authApi } from '../services/api';
+import { storage } from '../utils';
+import type { User, AuthResponse } from '../types';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
+    const savedUser = storage.get<User>('user');
+    return savedUser;
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
+      storage.set('user', user);
     } else {
-      localStorage.removeItem('user');
+      storage.remove('user');
+      storage.remove('authToken');
     }
   }, [user]);
 
-  const login = async (email: string, password: string) => {
+  // Проверяем токен при загрузке приложения
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = storage.get<string>('authToken');
+      if (token && !user) {
+        try {
+          const response = await authApi.getCurrentUser();
+          setUser(response.data);
+        } catch (error) {
+          // Токен недействителен, очищаем его
+          storage.remove('authToken');
+        }
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  const login = async (email: string, password: string): Promise<AuthResponse> => {
     setIsLoading(true);
+    setError(null);
+    
     try {
-      // Имитация API запроса
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await authApi.login(email, password);
+      const { user: userData, token } = response.data;
       
-      // В реальном приложении здесь был бы запрос к API
-      const userData = {
-        name: 'Пользователь',
-        email: email
-      };
-      
+      // Сохраняем токен и пользователя
+      storage.set('authToken', token);
       setUser(userData);
-      return { success: true };
-    } catch (error) {
-      return { success: false, error: 'Ошибка входа' };
+      
+      return { success: true, user: userData };
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Ошибка входа';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (name: string, email: string, password: string): Promise<AuthResponse> => {
     setIsLoading(true);
+    setError(null);
+    
     try {
-      // Имитация API запроса
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await authApi.register(name, email, password);
+      const { user: userData, token } = response.data;
       
-      // В реальном приложении здесь был бы запрос к API
-      const userData = {
-        name: name,
-        email: email
-      };
-      
+      // Сохраняем токен и пользователя
+      storage.set('authToken', token);
       setUser(userData);
-      return { success: true };
-    } catch (error) {
-      return { success: false, error: 'Ошибка регистрации' };
+      
+      return { success: true, user: userData };
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Ошибка регистрации';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    try {
+      await authApi.logout();
+    } catch (error) {
+      console.error('Ошибка при выходе:', error);
+    } finally {
+      // Очищаем данные независимо от результата API запроса
+      storage.remove('authToken');
+      storage.remove('user');
+      setUser(null);
+      setError(null);
+    }
+  };
+
+  const clearError = () => {
+    setError(null);
   };
 
   return {
     user,
     isLoading,
+    error,
     login,
     register,
     logout,
+    clearError,
     isAuthenticated: !!user
   };
 }; 

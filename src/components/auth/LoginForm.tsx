@@ -1,34 +1,31 @@
 import type { FC, FormEvent } from 'react';
 import { useState } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useAuth } from '../../hooks/useAuth';
+import Button from '../ui/Button';
+import Input from '../ui/Input';
 
 interface LoginFormProps {
   onSwitchToRegister: () => void;
-  onLogin: (email: string, password: string) => void;
+  onAuthSuccess: (user: { name: string; email: string }) => void;
 }
 
-const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
+const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) => {
   const { t } = useTranslation();
+  const { login, isLoading, error, clearError } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
+    clearError();
 
-    try {
-      // Имитация API запроса
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      onLogin(formData.email, formData.password);
-         } catch (err) {
-       setError(t('loginError'));
-     } finally {
-      setIsSubmitting(false);
+    const result = await login(formData.email, formData.password);
+    
+    if (result.success && result.user) {
+      onAuthSuccess(result.user);
     }
   };
 
@@ -48,53 +45,43 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
-                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-             {t('loginTitle')}
-           </h2>
-                       <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-              {t('or')}{' '}
-              <button
-                onClick={onSwitchToRegister}
-                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
-              >
-                {t('orCreateAccount')}
-              </button>
-            </p>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+            {t('loginTitle')}
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+            {t('or')}{' '}
+            <button
+              onClick={onSwitchToRegister}
+              className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+            >
+              {t('orCreateAccount')}
+            </button>
+          </p>
         </div>
+        
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 focus:z-10 sm:text-sm"
-                                 placeholder={t('emailAddress')}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Пароль
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={formData.password}
-                onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 focus:z-10 sm:text-sm"
-                                 placeholder={t('password')}
-              />
-            </div>
+          <div className="space-y-4">
+            <Input
+              label={t('emailAddress')}
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
+              required
+              placeholder={t('emailAddress')}
+              fullWidth
+            />
+            
+            <Input
+              label={t('password')}
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
+              required
+              placeholder={t('password')}
+              fullWidth
+            />
           </div>
 
           {error && (
@@ -105,21 +92,22 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onLogin }) => {
             </div>
           )}
 
-          <div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-                             {isSubmitting ? t('loggingIn') : t('loginButton')}
-            </button>
-          </div>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            loading={isLoading}
+            disabled={isLoading}
+            fullWidth
+          >
+            {isLoading ? t('loggingIn') : t('loginButton')}
+          </Button>
 
           <div className="flex items-center justify-between">
             <div className="text-sm">
-                             <a href="#" className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
-                 {t('forgotPassword')}
-               </a>
+              <a href="#" className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
+                {t('forgotPassword')}
+              </a>
             </div>
           </div>
         </form>

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Создаем axios инстанс с базовой конфигурацией
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8086/api',
   withCredentials: true,
   timeout: 10000,
   headers: {
@@ -79,6 +79,12 @@ export const authApi = {
   
   // Получить текущего пользователя
   getCurrentUser: () => api.get('/auth/me'),
+  
+  // Обновить токен
+  refreshToken: () => api.post('/auth/refresh'),
+  
+  // Проверить валидность токена
+  validateToken: () => api.get('/auth/validate'),
 };
 
 export default api;

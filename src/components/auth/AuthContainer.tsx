@@ -10,33 +10,17 @@ interface AuthContainerProps {
 const AuthContainer: FC<AuthContainerProps> = ({ onAuthSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
 
-  const handleLogin = (email: string, password: string) => {
-    // Имитация успешного входа
-    onAuthSuccess({
-      name: 'Пользователь',
-      email: email
-    });
-  };
-
-  const handleRegister = (name: string, email: string, password: string) => {
-    // Имитация успешной регистрации
-    onAuthSuccess({
-      name: name,
-      email: email
-    });
-  };
-
   return (
     <div>
       {isLogin ? (
         <LoginForm
           onSwitchToRegister={() => setIsLogin(false)}
-          onLogin={handleLogin}
+          onAuthSuccess={onAuthSuccess}
         />
       ) : (
         <RegisterForm
           onSwitchToLogin={() => setIsLogin(true)}
-          onRegister={handleRegister}
+          onAuthSuccess={onAuthSuccess}
         />
       )}
     </div>

@@ -13,6 +13,7 @@ export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  error: string | null;
 }
 
 export interface LoginCredentials {
@@ -24,6 +25,31 @@ export interface RegisterCredentials {
   name: string;
   email: string;
   password: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  user?: User;
+  token?: string;
+  error?: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface AuthApiResponse {
+  user: User;
+  token: string;
+  refreshToken?: string;
+  expiresIn?: number;
 }
 
 // Типы для резюме
