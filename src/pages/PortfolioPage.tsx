@@ -6,6 +6,63 @@ import Button from '../components/ui/Button';
 const PortfolioPage: FC = () => {
   const { t } = useTranslation();
   
+  const projectsData = [
+    {
+      title: t('project1Title'),
+      description: t('project1Description'),
+      technologies: ['Java', 'Selenium', 'Cucumber', 'REST-assured', 'Allure', 'Jenkins'],
+      image: '🏢',
+      link: '#',
+      github: '#',
+      status: 'completed'
+    },
+    {
+      title: t('project2Title'),
+      description: t('project2Description'),
+      technologies: ['Cucumber', 'Gherkin', 'POM', 'Screenplay', 'Gradle'],
+      image: '🌱',
+      link: '#',
+      github: '#',
+      status: 'completed'
+    },
+    {
+      title: t('project3Title'),
+      description: t('project3Description'),
+      technologies: ['REST-assured', 'GraphQL', 'OAuth 2.0', 'JWT', 'Retrofit'],
+      image: '🌐',
+      link: '#',
+      github: '#',
+      status: 'in-progress'
+    },
+    {
+      title: t('project4Title'),
+      description: t('project4Description'),
+      technologies: ['Appium', 'Java', 'Android', 'iOS', 'Allure'],
+      image: '📱',
+      link: '#',
+      github: '#',
+      status: 'completed'
+    },
+    {
+      title: t('project5Title'),
+      description: t('project5Description'),
+      technologies: ['JMeter', 'Java', 'Grafana', 'InfluxDB', 'Docker'],
+      image: '⚡',
+      link: '#',
+      github: '#',
+      status: 'completed'
+    },
+    {
+      title: t('project6Title'),
+      description: t('project6Description'),
+      technologies: ['Jenkins', 'GitHub Actions', 'GitLab CI', 'Docker', 'Kubernetes'],
+      image: '🔄',
+      link: '#',
+      github: '#',
+      status: 'completed'
+    }
+  ];
+  
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,62 +78,7 @@ const PortfolioPage: FC = () => {
 
         {/* Проекты */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            {
-              title: 'Enterprise Test Framework',
-              description: 'Полнофункциональный фреймворк для UI и API тестирования с поддержкой параллельного запуска, интеграцией с Jenkins и красивыми отчетами Allure.',
-              technologies: ['Java', 'Selenium', 'Cucumber', 'REST-assured', 'Allure', 'Jenkins'],
-              image: '🏢',
-              link: '#',
-              github: '#',
-              status: 'completed'
-            },
-            {
-              title: 'BDD Automation Suite',
-              description: 'Фреймворк на основе Cucumber + Gherkin для BDD подхода. Включает Page Object Model, Screenplay Pattern и Fluent Interface.',
-              technologies: ['Cucumber', 'Gherkin', 'POM', 'Screenplay', 'Gradle'],
-              image: '🌱',
-              link: '#',
-              github: '#',
-              status: 'completed'
-            },
-            {
-              title: 'API Testing Platform',
-              description: 'Специализированный фреймворк для API тестирования с поддержкой GraphQL, OAuth 2.0, JWT и различных форматов данных.',
-              technologies: ['REST-assured', 'GraphQL', 'OAuth 2.0', 'JWT', 'Retrofit'],
-              image: '🌐',
-              link: '#',
-              github: '#',
-              status: 'in-progress'
-            },
-            {
-              title: 'Mobile Test Automation',
-              description: 'Фреймворк для автоматизации тестирования мобильных приложений с поддержкой Appium и различных платформ.',
-              technologies: ['Appium', 'Java', 'Android', 'iOS', 'Allure'],
-              image: '📱',
-              link: '#',
-              github: '#',
-              status: 'completed'
-            },
-            {
-              title: 'Performance Test Suite',
-              description: 'Инструменты для нагрузочного тестирования с интеграцией JMeter и кастомными метриками.',
-              technologies: ['JMeter', 'Java', 'Grafana', 'InfluxDB', 'Docker'],
-              image: '⚡',
-              link: '#',
-              github: '#',
-              status: 'completed'
-            },
-            {
-              title: 'CI/CD Pipeline Framework',
-              description: 'Автоматизированные пайплайны для интеграции тестов в CI/CD процессы с поддержкой различных платформ.',
-              technologies: ['Jenkins', 'GitHub Actions', 'GitLab CI', 'Docker', 'Kubernetes'],
-              image: '🔄',
-              link: '#',
-              github: '#',
-              status: 'completed'
-            }
-          ].map((project, index) => (
+          {projectsData.map((project, index) => (
             <Card key={index} hover className="relative overflow-hidden">
               {/* Статус проекта */}
               <div className="absolute top-4 right-4">
@@ -85,7 +87,7 @@ const PortfolioPage: FC = () => {
                     ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                     : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
                 }`}>
-                  {project.status === 'completed' ? '✅ Завершен' : '🚧 В разработке'}
+                  {project.status === 'completed' ? `✅ ${t('statusCompleted')}` : `🚧 ${t('statusInProgress')}`}
                 </span>
               </div>
               

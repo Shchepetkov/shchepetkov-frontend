@@ -86,6 +86,29 @@ export const translations = {
     codeCoverage: 'Покрытие кода',
     cicdMonitoring: 'CI/CD мониторинг',
     
+    // Portfolio Projects
+    project1Title: 'Enterprise Test Framework',
+    project1Description: 'Полнофункциональный фреймворк для UI и API тестирования с поддержкой параллельного запуска, интеграцией с Jenkins и красивыми отчетами Allure.',
+    
+    project2Title: 'BDD Automation Suite',
+    project2Description: 'Фреймворк на основе Cucumber + Gherkin для BDD подхода. Включает Page Object Model, Screenplay Pattern и Fluent Interface.',
+    
+    project3Title: 'API Testing Platform',
+    project3Description: 'Специализированный фреймворк для API тестирования с поддержкой GraphQL, OAuth 2.0, JWT и различных форматов данных.',
+    
+    project4Title: 'Mobile Test Automation',
+    project4Description: 'Фреймворк для автоматизации тестирования мобильных приложений с поддержкой Appium и различных платформ.',
+    
+    project5Title: 'Performance Test Suite',
+    project5Description: 'Инструменты для нагрузочного тестирования с интеграцией JMeter и кастомными метриками.',
+    
+    project6Title: 'CI/CD Pipeline Framework',
+    project6Description: 'Автоматизированные пайплайны для интеграции тестов в CI/CD процессы с поддержкой различных платформ.',
+    
+    // Project Status
+    statusCompleted: 'Завершен',
+    statusInProgress: 'В разработке',
+    
     // Contact Page
     contactTitle: 'Связаться со мной',
     contactSubtitle: 'Готов к новым проектам и интересным предложениям. Давайте обсудим ваши идеи!',
@@ -222,6 +245,29 @@ export const translations = {
     automatedTests: 'Automated Tests',
     codeCoverage: 'Code Coverage',
     cicdMonitoring: 'CI/CD Monitoring',
+    
+    // Portfolio Projects
+    project1Title: 'Enterprise Test Framework',
+    project1Description: 'Full-featured framework for UI and API testing with support for parallel execution, integration with Jenkins, and beautiful Allure reports.',
+    
+    project2Title: 'BDD Automation Suite',
+    project2Description: 'Framework based on Cucumber + Gherkin for BDD approach. Includes Page Object Model, Screenplay Pattern, and Fluent Interface.',
+    
+    project3Title: 'API Testing Platform',
+    project3Description: 'Specialized framework for API testing with support for GraphQL, OAuth 2.0, JWT, and various data formats.',
+    
+    project4Title: 'Mobile Test Automation',
+    project4Description: 'Framework for automating mobile application testing with support for Appium and various platforms.',
+    
+    project5Title: 'Performance Test Suite',
+    project5Description: 'Tools for load testing with JMeter integration and custom metrics.',
+    
+    project6Title: 'CI/CD Pipeline Framework',
+    project6Description: 'Automated pipelines for integrating tests into CI/CD processes with support for various platforms.',
+    
+    // Project Status
+    statusCompleted: 'Completed',
+    statusInProgress: 'In Development',
     
     // Contact Page
     contactTitle: 'Contact Me',
