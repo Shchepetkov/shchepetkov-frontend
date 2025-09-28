@@ -34,11 +34,11 @@ const UserProfile: FC<UserProfileProps> = ({ className = '' }) => {
         {/* Кнопка выхода */}
         <button
           onClick={logout}
-          className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+          className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
           title={t('logout')}
         >
           <svg 
-            className="w-4 h-4" 
+            className="w-5 h-5" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
