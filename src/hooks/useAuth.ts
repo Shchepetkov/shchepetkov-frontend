@@ -231,21 +231,15 @@ export const useAuth = () => {
       const response = await authApi.register(username, password);
       console.log('Ответ от API:', response);
       
-      // Backend возвращает токен в формате "Bearer <token>", убираем "Bearer " prefix
-      let token = response.data;
-      if (typeof token === 'string' && token.startsWith('Bearer ')) {
-        token = token.substring(7); // Убираем "Bearer " (7 символов)
+      // Backend возвращает объект с success и message
+      const responseData = response.data;
+      console.log('Response data:', responseData);
+      
+      if (!responseData.success) {
+        throw new Error(responseData.message || 'Ошибка регистрации');
       }
       
-      if (!token) {
-        throw new Error('Токен не получен от сервера');
-      }
-      
-      // Сохраняем токен без Bearer prefix
-      storage.set('authToken', token);
-      console.log('Токен сохранен');
-      
-      // Создаем объект пользователя из username
+      // После успешной регистрации создаем объект пользователя
       const userData = {
         id: username,
         name: username,
@@ -257,6 +251,10 @@ export const useAuth = () => {
       setUser(userData);
       console.log('Пользователь установлен:', userData);
       
+      // Сохраняем пользователя в localStorage
+      storage.set('user', userData);
+      console.log('Пользователь сохранен в localStorage');
+      
       return { success: true, user: userData };
     } catch (error: any) {
       console.error('Ошибка регистрации:', error);
@@ -265,7 +263,17 @@ export const useAuth = () => {
       
       if (error.response) {
         // Сервер ответил с ошибкой
-        errorMessage = error.response.data?.message || error.response.data || `Ошибка сервера: ${error.response.status}`;
+        const responseData = error.response.data;
+        if (responseData && responseData.message) {
+          // Проверяем специфичные сообщения от backend
+          if (responseData.message.includes('User already exists')) {
+            errorMessage = 'Пользователь уже существует!';
+          } else {
+            errorMessage = responseData.message;
+          }
+        } else {
+          errorMessage = `Ошибка сервера: ${error.response.status}`;
+        }
       } else if (error.request) {
         // Запрос был отправлен, но ответа не получено
         errorMessage = 'Сервер недоступен. Проверьте, что Java backend запущен на порту 8086';

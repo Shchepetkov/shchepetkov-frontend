@@ -30,6 +30,11 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSwitchToLogin, onAuthSuccess })
       return;
     }
 
+    if (formData.password.length < 6) {
+      setValidationError(t('passwordTooShort'));
+      return;
+    }
+
     const result = await register(formData.username, formData.password);
     
     if (result.success && result.user) {

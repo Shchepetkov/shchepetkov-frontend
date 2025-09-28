@@ -40,8 +40,7 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-  name: string;
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -50,6 +49,11 @@ export interface AuthApiResponse {
   token: string;
   refreshToken?: string;
   expiresIn?: number;
+}
+
+export interface RegisterApiResponse {
+  success: boolean;
+  message: string;
 }
 
 // Типы для резюме

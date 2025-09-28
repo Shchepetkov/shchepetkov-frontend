@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { RegisterApiResponse } from '../types';
 
 // Создаем axios инстанс с базовой конфигурацией
 export const api = axios.create({
@@ -111,7 +112,7 @@ export const authApi = {
   
   // Регистрация
   register: (username: string, password: string) => 
-    api.post('/auth/register', { username, password }),
+    api.post<RegisterApiResponse>('/registration', { username, password }),
   
   // Выход
   logout: () => api.post('/auth/logout'),

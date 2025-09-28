@@ -105,6 +105,9 @@ export const translations = {
     loginError: 'Ошибка входа. Проверьте email и пароль.',
     registerError: 'Ошибка регистрации. Попробуйте еще раз.',
     passwordMismatch: 'Пароли не совпадают',
+    userAlreadyExists: 'Пользователь уже существует!',
+    registrationSuccess: 'Пользователь успешно зарегистрирован',
+    passwordTooShort: 'Пароль должен содержать минимум 6 символов',
     
     // Footer
     allRightsReserved: 'Все права защищены',
@@ -215,6 +218,9 @@ export const translations = {
     loginError: 'Login error. Check your email and password.',
     registerError: 'Registration error. Please try again.',
     passwordMismatch: 'Passwords do not match',
+    userAlreadyExists: 'User already exists!',
+    registrationSuccess: 'User registered successfully',
+    passwordTooShort: 'Password must be at least 6 characters long',
     
     // Footer
     allRightsReserved: 'All rights reserved',
