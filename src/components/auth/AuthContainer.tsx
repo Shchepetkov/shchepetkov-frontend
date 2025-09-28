@@ -8,7 +8,14 @@ interface AuthContainerProps {
 }
 
 const AuthContainer: FC<AuthContainerProps> = ({ onAuthSuccess }) => {
+  console.log('=== AuthContainer рендерится ===');
+  
   const [isLogin, setIsLogin] = useState(true);
+  
+  console.log('AuthContainer state:', { isLogin });
+  console.log('AuthContainer props:', { onAuthSuccess });
+
+  console.log('AuthContainer render:', { isLogin });
 
   return (
     <div>

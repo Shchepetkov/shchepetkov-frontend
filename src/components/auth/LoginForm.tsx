@@ -11,21 +11,42 @@ interface LoginFormProps {
 }
 
 const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) => {
+  console.log('=== LoginForm рендерится ===');
+  
   const { t } = useTranslation();
   const { login, isLoading, error, clearError } = useAuthContext();
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   });
+  
+  console.log('LoginForm props:', { onSwitchToRegister, onAuthSuccess });
+  console.log('LoginForm state:', { formData, isLoading, error });
 
   const handleSubmit = async (e: FormEvent) => {
+    console.log('=== ФОРМА ОТПРАВЛЕНА ===');
+    console.log('Form data:', formData);
+    console.log('Event:', e);
+    
     e.preventDefault();
+    e.stopPropagation();
+    
+    console.log('После preventDefault');
     clearError();
 
-    const result = await login(formData.username, formData.password);
-    
-    if (result.success && result.user) {
-      onAuthSuccess();
+    console.log('Вызываем функцию login...');
+    try {
+      const result = await login(formData.username, formData.password);
+      console.log('Результат login:', result);
+      
+      if (result.success && result.user) {
+        console.log('Успешный вход, вызываем onAuthSuccess');
+        onAuthSuccess();
+      } else {
+        console.log('Неуспешный вход:', result.error);
+      }
+    } catch (error) {
+      console.error('Ошибка в handleSubmit:', error);
     }
   };
 
@@ -59,14 +80,14 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
           </p>
         </div>
         
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit} action="#" method="post">
           <div className="space-y-4">
             <Input
               label="Имя пользователя"
               name="username"
               type="text"
               value={formData.username}
-              onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
+              onChange={handleChange}
               required
               placeholder="Введите имя пользователя"
               fullWidth
@@ -77,7 +98,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
               name="password"
               type="password"
               value={formData.password}
-              onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+              onChange={handleChange}
               required
               placeholder={t('password')}
               fullWidth
@@ -99,6 +120,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
             loading={isLoading}
             disabled={isLoading}
             fullWidth
+            onClick={() => console.log('Кнопка нажата')}
           >
             {isLoading ? t('loggingIn') : t('loginButton')}
           </Button>

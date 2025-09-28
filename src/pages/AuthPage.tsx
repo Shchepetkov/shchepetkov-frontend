@@ -1,12 +1,27 @@
 import type { FC } from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import AuthContainer from '../components/auth/AuthContainer';
 import WelcomeToast from '../components/ui/WelcomeToast';
 
 const AuthPage: FC = () => {
-  const { isInitialized } = useAuthContext();
+  console.log('=== AuthPage рендерится ===');
+  
+  const { isInitialized, isAuthenticated } = useAuthContext();
+  const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(false);
+  
+  console.log('AuthPage state:', { isInitialized, isAuthenticated, showWelcome });
+
+  // Если пользователь уже авторизован, перенаправляем на главную
+  useEffect(() => {
+    console.log('AuthPage useEffect:', { isInitialized, isAuthenticated });
+    if (isInitialized && isAuthenticated) {
+      console.log('Перенаправляем на главную');
+      navigate('/', { replace: true });
+    }
+  }, [isInitialized, isAuthenticated, navigate]);
 
   // Показываем загрузку пока не инициализирована авторизация
   if (!isInitialized) {
@@ -21,8 +36,11 @@ const AuthPage: FC = () => {
   }
 
   const handleAuthSuccess = () => {
-    // Просто показываем приветствие, НЕ перенаправляем
+    // Показываем приветствие и перенаправляем
     setShowWelcome(true);
+    setTimeout(() => {
+      navigate('/', { replace: true });
+    }, 2000);
   };
 
   return (

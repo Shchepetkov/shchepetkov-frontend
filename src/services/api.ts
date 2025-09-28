@@ -15,9 +15,12 @@ api.interceptors.request.use(
   (config) => {
     try {
       // Добавляем токен авторизации если есть
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
+        console.log('Добавлен токен в заголовок:', `Bearer ${token.substring(0, 20)}...`);
+      } else {
+        console.log('Токен не найден в localStorage и sessionStorage');
       }
       return config;
     } catch (error) {
@@ -47,9 +50,13 @@ api.interceptors.response.use(
       
       if (error.response?.status === 401) {
         // Очищаем токен при 401 ошибке
+        console.log('Получена 401 ошибка, очищаем токен и пользователя');
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
-        console.log('Токен очищен из-за 401 ошибки');
+        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('user');
+        // Отправляем событие для обновления состояния в других компонентах
+        window.dispatchEvent(new CustomEvent('auth-logout'));
       }
       
       // Логируем детали ошибки для отладки
