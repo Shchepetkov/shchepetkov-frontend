@@ -79,7 +79,7 @@ const ContactPage: FC = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">{t('location')}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Москва, Россия</p>
+                  <p className="text-gray-600 dark:text-gray-400">{t('locationValue')}</p>
                 </div>
               </div>
 
@@ -125,7 +125,7 @@ const ContactPage: FC = () => {
                   </svg>
                 </a>
                 <a
-                  href="https://t.me/maksim_shchepetkov"
+                  href="https://t.me/David_Rizer"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"

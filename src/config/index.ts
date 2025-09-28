@@ -39,12 +39,12 @@ export const config = {
   // Настройки контактов
   contacts: {
     email: 'maksim.shchepetkov@example.com',
-    phone: '+7 (999) 123-45-67',
-    location: 'Москва, Россия',
-    locationEn: 'Moscow, Russia',
+    phone: '+7 (927) 125-11-23',
+    location: 'Саратов, Россия',
+    locationEn: 'Saratov, Russia',
     linkedin: 'https://linkedin.com/in/maksim-shchepetkov',
     github: 'https://github.com/maksim-shchepetkov',
-    telegram: 'https://t.me/maksim_shchepetkov',
+    telegram: 'https://t.me/David_Rizer',
   },
   
   // Настройки социальных сетей

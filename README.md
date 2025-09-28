@@ -251,7 +251,7 @@ MIT License - см. файл [LICENSE](LICENSE)
 - Email: maksim.shchepetkov@example.com
 - LinkedIn: [linkedin.com/in/maksim-shchepetkov](https://linkedin.com/in/maksim-shchepetkov)
 - GitHub: [github.com/maksim-shchepetkov](https://github.com/maksim-shchepetkov)
-- Telegram: [@maksim_shchepetkov](https://t.me/maksim_shchepetkov)
+- Telegram: [@David_Rizer](https://t.me/David_Rizer)
 
 ---
 
