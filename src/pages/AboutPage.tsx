@@ -5,6 +5,30 @@ import Card from '../components/ui/Card';
 const AboutPage: FC = () => {
   const { t } = useTranslation();
   
+  const workExperienceData = [
+    {
+      period: t('timePeriod'),
+      company: t('workExperienceSubtitle'),
+      position: t('workExperienceTitle'),
+      description: t('workExperienceText'),
+      technologies: ['Java', 'Selenium', 'Cucumber', 'REST-assured', 'Jenkins', 'Docker']
+    },
+    {
+      period: t('timePeriod2'),
+      company: t('workExperienceSubtitle2'),
+      position: t('workExperienceTitle2'),
+      description: t('workExperienceText2'),
+      technologies: ['Java', 'Selenium', 'Cucumber', 'Allure', 'Maven', 'GitLab CI']
+    },
+    {
+      period: t('timePeriod3'),
+      company: t('workExperienceSubtitle3'),
+      position: t('workExperienceTitle3'),
+      description: t('workExperienceText3'),
+      technologies: ['Manual Testing', 'Selenium', 'Java', 'JUnit', 'TestNG']
+    }
+  ];
+  
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -72,29 +96,7 @@ const AboutPage: FC = () => {
             {t('workExperience')}
           </h2>
           <div className="space-y-6">
-            {[
-              {
-                period: '2023 - настоящее время',
-                company: 'TechCorp',
-                position: 'Senior Test Automation Engineer',
-                description: 'Создание фреймворков для UI и API тестирования, интеграция с CI/CD, менторинг команды',
-                technologies: ['Java', 'Selenium', 'Cucumber', 'REST-assured', 'Jenkins', 'Docker']
-              },
-              {
-                period: '2021 - 2023',
-                company: 'InnovationLab',
-                position: 'Test Automation Engineer',
-                description: 'Разработка автоматизированных тестов, внедрение Cucumber + Gherkin, создание отчетов Allure',
-                technologies: ['Java', 'Selenium', 'Cucumber', 'Allure', 'Maven', 'GitLab CI']
-              },
-              {
-                period: '2019 - 2021',
-                company: 'StartupXYZ',
-                position: 'QA Engineer',
-                description: 'Ручное тестирование, первые шаги в автоматизации, изучение Selenium WebDriver',
-                technologies: ['Manual Testing', 'Selenium', 'Java', 'JUnit', 'TestNG']
-              }
-            ].map((job, index) => (
+            {workExperienceData.map((job, index) => (
               <Card key={index} hover className="relative">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex-1">

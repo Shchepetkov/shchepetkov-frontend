@@ -57,7 +57,25 @@ export const translations = {
     bachelorDegree: 'Бакалавр компьютерных наук',
     university: 'Московский технический университет',
     specialization: 'Специализация: Программная инженерия и тестирование',
-    
+
+    //Work experience
+    workExperienceTitle: 'Старший инженер по автоматизации тестирования',
+    workExperienceSubtitle: 'TechCorp',
+    workExperienceText: 'Создание фреймворков для UI и API тестирования, интеграция с CI/CD, менторинг команды',
+    timePeriod: '2023 - настоящее время',
+
+    //Work experience2
+    workExperienceTitle2: 'Инженер по автоматизации тестирования',
+    workExperienceSubtitle2: 'InnovationLab',
+    workExperienceText2: 'Разработка автоматизированных тестов, внедрение Cucumber + Gherkin, создание отчетов Allure',
+    timePeriod2: '2021 - 2023',
+
+    //Work experience3
+    workExperienceTitle3: 'Инженер по контролю качества',
+    workExperienceSubtitle3: 'StartupXYZ',
+    workExperienceText3: 'Ручное тестирование, первые шаги в автоматизации, изучение Selenium WebDriver',
+    timePeriod3: '2019 - 2021',
+
     // Portfolio Page
     portfolioTitle: 'Портфолио проектов',
     portfolioSubtitle: 'Примеры моих работ по созданию фреймворков для автоматизации тестирования',
@@ -176,7 +194,25 @@ export const translations = {
     bachelorDegree: 'Bachelor of Computer Science',
     university: 'Moscow Technical University',
     specialization: 'Specialization: Software Engineering and Testing',
-    
+
+    //Work experience
+    workExperienceTitle: 'Senior Test Automation Engineer',
+    workExperienceSubtitle: 'TechCorp',
+    workExperienceText: 'Creation of frameworks for UI and API testing, integration with CI/CD, mentoring of the team',
+    timePeriod: '2023 - now',
+
+    //Work experience2
+    workExperienceTitle2: 'Test Automation Engineer',
+    workExperienceSubtitle2: 'InnovationLab',
+    workExperienceText2: 'Development of automated tests, implementation of Cucumber+ Gherkin, Allure report generation',
+    timePeriod2: '2021 - 2023',
+
+    //Work experience3
+    workExperienceTitle3: 'QA Engineer',
+    workExperienceSubtitle3: 'StartupXYZ',
+    workExperienceText3: 'Manual testing, first steps in automation, studying Selenium WebDriver',
+    timePeriod3: '2019 - 2021',
+
     // Portfolio Page
     portfolioTitle: 'Portfolio Projects',
     portfolioSubtitle: 'Examples of my work in creating test automation frameworks',
