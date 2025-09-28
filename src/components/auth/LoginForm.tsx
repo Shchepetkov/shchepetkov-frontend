@@ -1,20 +1,20 @@
 import type { FC, FormEvent } from 'react';
 import { useState } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuthContext } from '../../contexts/AuthContext';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 
 interface LoginFormProps {
   onSwitchToRegister: () => void;
-  onAuthSuccess: (user: { name: string; email: string }) => void;
+  onAuthSuccess: () => void;
 }
 
 const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) => {
   const { t } = useTranslation();
-  const { login, isLoading, error, clearError } = useAuth();
+  const { login, isLoading, error, clearError } = useAuthContext();
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
 
@@ -22,10 +22,10 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
     e.preventDefault();
     clearError();
 
-    const result = await login(formData.email, formData.password);
+    const result = await login(formData.username, formData.password);
     
     if (result.success && result.user) {
-      onAuthSuccess(result.user);
+      onAuthSuccess();
     }
   };
 
@@ -62,13 +62,13 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <Input
-              label={t('emailAddress')}
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
+              label="Имя пользователя"
+              name="username"
+              type="text"
+              value={formData.username}
+              onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
               required
-              placeholder={t('emailAddress')}
+              placeholder="Введите имя пользователя"
               fullWidth
             />
             
@@ -77,7 +77,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
               name="password"
               type="password"
               value={formData.password}
-              onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
+              onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
               required
               placeholder={t('password')}
               fullWidth

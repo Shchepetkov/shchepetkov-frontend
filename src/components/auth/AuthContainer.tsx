@@ -4,7 +4,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
 interface AuthContainerProps {
-  onAuthSuccess: (user: { name: string; email: string }) => void;
+  onAuthSuccess: () => void;
 }
 
 const AuthContainer: FC<AuthContainerProps> = ({ onAuthSuccess }) => {

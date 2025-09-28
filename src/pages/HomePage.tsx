@@ -1,11 +1,25 @@
 import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTranslation } from '../hooks/useTranslation';
+import WelcomeToast from '../components/ui/WelcomeToast';
 
 const HomePage: FC = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  // Показываем приветствие для авторизованных пользователей при первом заходе
+  useEffect(() => {
+    if (user) {
+      const hasShownWelcome = sessionStorage.getItem('welcomeShown');
+      if (!hasShownWelcome) {
+        setShowWelcome(true);
+        sessionStorage.setItem('welcomeShown', 'true');
+      }
+    }
+  }, [user]);
   
   return (
     <div className="min-h-screen">
@@ -113,6 +127,11 @@ const HomePage: FC = () => {
           </div>
         </div>
       </section>
+      
+      {/* Welcome Toast */}
+      {showWelcome && (
+        <WelcomeToast onClose={() => setShowWelcome(false)} />
+      )}
     </div>
   );
 };

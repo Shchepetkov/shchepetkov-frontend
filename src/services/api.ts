@@ -13,28 +13,60 @@ export const api = axios.create({
 // Интерцептор для запросов
 api.interceptors.request.use(
   (config) => {
-    // Добавляем токен авторизации если есть
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    try {
+      // Добавляем токен авторизации если есть
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    } catch (error) {
+      console.error('Ошибка в request interceptor:', error);
+      return Promise.reject(error);
     }
-    return config;
   },
   (error) => {
+    console.error('Ошибка в request interceptor:', error);
     return Promise.reject(error);
   }
 );
 
 // Интерцептор для ответов
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Очищаем токен при 401 ошибке
-      localStorage.removeItem('authToken');
-      window.location.href = '/auth';
+  (response) => {
+    try {
+      return response;
+    } catch (error) {
+      console.error('Ошибка в response interceptor:', error);
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
+  },
+  (error) => {
+    try {
+      console.log('API Error:', error);
+      
+      if (error.response?.status === 401) {
+        // Очищаем токен при 401 ошибке
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        console.log('Токен очищен из-за 401 ошибки');
+      }
+      
+      // Логируем детали ошибки для отладки
+      if (error.response) {
+        console.log('Response error:', error.response.data);
+        console.log('Status:', error.response.status);
+      } else if (error.request) {
+        console.log('Request error:', error.request);
+      } else {
+        console.log('Error:', error.message);
+      }
+      
+      return Promise.reject(error);
+    } catch (interceptorError) {
+      console.error('Ошибка в response interceptor:', interceptorError);
+      return Promise.reject(error);
+    }
   }
 );
 
@@ -67,12 +99,12 @@ export const resumeApi = {
 // API методы для аутентификации
 export const authApi = {
   // Вход
-  login: (email: string, password: string) => 
-    api.post('/auth/login', { email, password }),
+  login: (username: string, password: string) => 
+    api.post('/auth/login', { username, password }),
   
   // Регистрация
-  register: (name: string, email: string, password: string) => 
-    api.post('/auth/register', { name, email, password }),
+  register: (username: string, password: string) => 
+    api.post('/auth/register', { username, password }),
   
   // Выход
   logout: () => api.post('/auth/logout'),

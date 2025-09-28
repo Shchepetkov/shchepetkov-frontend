@@ -1,21 +1,20 @@
 import type { FC, FormEvent } from 'react';
 import { useState } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuthContext } from '../../contexts/AuthContext';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 
 interface RegisterFormProps {
   onSwitchToLogin: () => void;
-  onAuthSuccess: (user: { name: string; email: string }) => void;
+  onAuthSuccess: () => void;
 }
 
 const RegisterForm: FC<RegisterFormProps> = ({ onSwitchToLogin, onAuthSuccess }) => {
   const { t } = useTranslation();
-  const { register, isLoading, error, clearError } = useAuth();
+  const { register, isLoading, error, clearError } = useAuthContext();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    username: '',
     password: '',
     confirmPassword: ''
   });
@@ -31,10 +30,10 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSwitchToLogin, onAuthSuccess })
       return;
     }
 
-    const result = await register(formData.name, formData.email, formData.password);
+    const result = await register(formData.username, formData.password);
     
     if (result.success && result.user) {
-      onAuthSuccess(result.user);
+      onAuthSuccess();
     }
   };
 
@@ -65,24 +64,13 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSwitchToLogin, onAuthSuccess })
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <Input
-              label={t('fullName')}
-              name="name"
+              label="Имя пользователя"
+              name="username"
               type="text"
-              value={formData.name}
-              onChange={(value) => setFormData(prev => ({ ...prev, name: value }))}
+              value={formData.username}
+              onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
               required
-              placeholder={t('fullName')}
-              fullWidth
-            />
-            
-            <Input
-              label={t('emailAddress')}
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
-              required
-              placeholder={t('emailAddress')}
+              placeholder="Введите имя пользователя"
               fullWidth
             />
             
@@ -91,7 +79,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSwitchToLogin, onAuthSuccess })
               name="password"
               type="password"
               value={formData.password}
-              onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
+              onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
               required
               placeholder={t('password')}
               fullWidth
@@ -102,7 +90,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSwitchToLogin, onAuthSuccess })
               name="confirmPassword"
               type="password"
               value={formData.confirmPassword}
-              onChange={(value) => setFormData(prev => ({ ...prev, confirmPassword: value }))}
+              onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))}
               required
               placeholder={t('confirmPassword')}
               fullWidth

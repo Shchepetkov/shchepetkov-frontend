@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuthContext } from '../../contexts/AuthContext';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useTranslation } from '../../hooks/useTranslation';
 
 const Header: FC = () => {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthContext();
   const { language, toggleLanguage } = useLanguage();
   const { t } = useTranslation();
 
@@ -53,26 +53,26 @@ const Header: FC = () => {
 
           {/* Аутентификация */}
           <div className="flex items-center space-x-4">
-                         {user ? (
-               <div className="flex items-center space-x-2">
-                 <span className="text-sm text-gray-700 dark:text-gray-300">
-                   {t('hello')}, {user.name}
-                 </span>
-                 <button
-                   onClick={logout}
-                   className="px-3 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-                 >
-                   {t('logout')}
-                 </button>
-               </div>
-             ) : (
-               <Link
-                 to="/auth"
-                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-               >
-                 {t('login')}
-               </Link>
-             )}
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  {t('hello')}, <span className="font-semibold">{user.name}</span>
+                </span>
+                <button
+                  onClick={logout}
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                >
+                  {t('logout')}
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/auth"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              >
+                {t('login')}
+              </Link>
+            )}
             
                          {/* Переключатель языка */}
              <button

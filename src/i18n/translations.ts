@@ -8,6 +8,8 @@ export const translations = {
     login: 'Войти',
     logout: 'Выйти',
     hello: 'Привет',
+    welcomeBack: 'Добро пожаловать, {name}!',
+    loginSuccess: 'Вы успешно вошли в систему',
     
     // Hero Section
     heroTitle: 'Привет, я',
@@ -116,6 +118,8 @@ export const translations = {
     login: 'Login',
     logout: 'Logout',
     hello: 'Hello',
+    welcomeBack: 'Welcome back, {name}!',
+    loginSuccess: 'You have successfully logged in',
     
     // Hero Section
     heroTitle: 'Hello, I am',

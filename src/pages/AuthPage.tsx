@@ -1,30 +1,36 @@
 import type { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useAuthContext } from '../contexts/AuthContext';
 import AuthContainer from '../components/auth/AuthContainer';
-import TestApiButton from '../components/TestApiButton';
+import WelcomeToast from '../components/ui/WelcomeToast';
 
 const AuthPage: FC = () => {
-  const navigate = useNavigate();
+  const { isInitialized } = useAuthContext();
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  // Показываем загрузку пока не инициализирована авторизация
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Загрузка...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleAuthSuccess = () => {
-    // Перенаправляем на главную страницу после успешной аутентификации
-    navigate('/');
+    // Просто показываем приветствие, НЕ перенаправляем
+    setShowWelcome(true);
   };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <AuthContainer onAuthSuccess={handleAuthSuccess} />
-            </div>
-            <div className="flex items-center">
-              <TestApiButton />
-            </div>
-          </div>
-        </div>
-      </div>
+      <AuthContainer onAuthSuccess={handleAuthSuccess} />
+      {showWelcome && (
+        <WelcomeToast onClose={() => setShowWelcome(false)} />
+      )}
     </div>
   );
 };
