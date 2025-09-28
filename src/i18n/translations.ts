@@ -2,6 +2,8 @@ export const translations = {
   ru: {
     // Header
     home: 'Главная',
+    nameAndLastName: 'Максим Щепетков',
+    initials: 'МЩ',
     about: 'О себе',
     portfolio: 'Портфолио',
     contact: 'Контакты',
@@ -119,6 +121,8 @@ export const translations = {
   en: {
     // Header
     home: 'Home',
+    nameAndLastName: 'Maksim Shchepetkov',
+    initials: 'MS',
     about: 'About',
     portfolio: 'Portfolio',
     contact: 'Contact',

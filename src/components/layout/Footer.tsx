@@ -11,7 +11,7 @@ const Footer: FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           {/* Копирайт */}
                                 <div className="text-gray-600 dark:text-gray-400">
-                        <p>&copy; {currentYear} Максим Щепетков. {t('allRightsReserved')}.</p>
+                        <p>&copy; {currentYear} {t('nameAndLastName')}. {t('allRightsReserved')}.</p>
                       </div>
 
           {/* Социальные сети */}
