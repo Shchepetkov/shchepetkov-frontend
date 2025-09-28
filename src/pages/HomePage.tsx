@@ -29,12 +29,12 @@ const HomePage: FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Текст */}
             <div className="text-center lg:text-left">
-                             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                 {user ? t('heroTitleWithName', { name: user.name }) : t('heroTitle')}{' '}
-                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                   Максим Щепетков
-                 </span>
-               </h1>
+              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                {t('heroTitle')}{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                  Максим Щепетков
+                </span>
+              </h1>
                              <p className="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8">
                  {t('heroSubtitle')}
                </p>

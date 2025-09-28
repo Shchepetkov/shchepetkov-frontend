@@ -7,6 +7,7 @@ import AboutPage from './pages/AboutPage';
 import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 import AuthPage from './pages/AuthPage';
+import ProfilePage from './pages/ProfilePage';
 import Footer from './components/layout/Footer';
 
 const App: FC = () => {
@@ -21,12 +22,7 @@ const App: FC = () => {
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/auth" element={<AuthPage />} />
-            {/* Защищенные маршруты можно добавить так:
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            } /> */}
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </main>
         <Footer />
