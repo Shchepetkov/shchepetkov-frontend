@@ -9,7 +9,7 @@
 - **Vite** - Быстрый инструмент сборки
 - **Tailwind CSS** - Utility-first CSS фреймворк
 - **React Router** - Маршрутизация для SPA
-- **Zustand** - Легковесное управление состоянием
+- **Context API** - Управление состоянием (аутентификация, язык, тема)
 - **Axios** - HTTP клиент для API запросов
 
 ## 📁 Структура проекта
@@ -21,7 +21,7 @@ src/
 │   ├── auth/       # Компоненты аутентификации
 │   ├── layout/     # Компоненты макета (Header, Footer)
 │   └── ui/         # Базовые UI компоненты
-├── config/         # Конфигурация приложения
+├── contexts/        # React Context провайдеры (Auth, Language)
 ├── hooks/          # Кастомные React хуки
 ├── i18n/           # Интернационализация (переводы)
 ├── pages/          # Страницы приложения
@@ -47,6 +47,8 @@ src/
 - **Портфолио проектов** - Демонстрация работ и навыков
 - **Контактная форма** - Возможность связаться
 - **Скачивание резюме** - PDF версия резюме
+- **Аутентификация** - Регистрация и вход пользователей
+- **Профиль пользователя** - Управление личными данными
 - **Социальные сети** - Ссылки на профили
 
 ## 🚀 Запуск проекта
@@ -75,7 +77,7 @@ cp env.example .env
 
 Отредактируйте `.env` файл:
 ```env
-VITE_API_URL=http://localhost:8080/api
+VITE_API_URL=http://localhost:8086/api
 ```
 
 4. **Запустите проект в режиме разработки**
@@ -106,13 +108,12 @@ VITE_API_URL=http://your-backend-url/api
 
 ### Конфигурация
 
-Основные настройки находятся в `src/config/index.ts`:
+Основные настройки находятся в файле `.env`:
 
-- **API настройки** - URL, таймауты, retry
-- **Тема** - Настройки светлой/темной темы
-- **Язык** - Поддерживаемые языки
-- **Контакты** - Email, телефон, социальные сети
-- **Мета-теги** - SEO настройки
+- **API настройки** - `VITE_API_URL` для базового URL backend API
+- **Тема** - Управляется через `useTheme` хук и сохраняется в localStorage
+- **Язык** - Управляется через `useLanguage` хук и сохраняется в localStorage
+- **Аутентификация** - Токены хранятся в localStorage/sessionStorage
 
 ### Добавление новых переводов
 
@@ -147,6 +148,18 @@ return <h1>{t('newKey')}</h1>;
 - Форма обратной связи
 - Социальные сети
 
+### 🔐 Аутентификация
+
+- Страница входа и регистрации
+- Защищенные маршруты
+- Управление сессией пользователя
+
+### 👤 Профиль
+
+- Личная информация пользователя
+- Настройки аккаунта
+- История активности
+
 ## 🎨 UI Компоненты
 
 ### Button
@@ -174,6 +187,19 @@ return <h1>{t('newKey')}</h1>;
 />
 ```
 
+### Textarea
+
+```tsx
+<Textarea
+    label="Сообщение"
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+    rows={5}
+    resize="vertical"
+    required
+/>
+```
+
 ## 🔌 API интеграция
 
 ### Настройка backend
@@ -188,8 +214,34 @@ public class ResumeController {
     @GetMapping("/resume")
     public Resume getResume() { ... }
     
+    @GetMapping("/resume/experience")
+    public List<Experience> getExperience() { ... }
+    
+    @GetMapping("/resume/skills")
+    public List<Skill> getSkills() { ... }
+    
+    @GetMapping("/resume/projects")
+    public List<Project> getProjects() { ... }
+    
     @PostMapping("/contact")
     public ContactResponse sendContact(@RequestBody ContactForm form) { ... }
+}
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    
+    @PostMapping("/login")
+    public AuthResponse login(@RequestBody LoginRequest request) { ... }
+    
+    @PostMapping("/registration")
+    public RegisterResponse register(@RequestBody RegisterRequest request) { ... }
+    
+    @PostMapping("/logout")
+    public void logout() { ... }
+    
+    @GetMapping("/me")
+    public User getCurrentUser() { ... }
 }
 ```
 
@@ -201,6 +253,11 @@ import { resumeApi, authApi } from './services/api';
 // Получить данные резюме
 const resume = await resumeApi.getResume();
 
+// Получить опыт работы, навыки, проекты
+const experience = await resumeApi.getExperience();
+const skills = await resumeApi.getSkills();
+const projects = await resumeApi.getProjects();
+
 // Отправить контактную форму
 const response = await resumeApi.sendContactForm({
   name: 'Имя',
@@ -208,6 +265,11 @@ const response = await resumeApi.sendContactForm({
   subject: 'Тема',
   message: 'Сообщение'
 });
+
+// Аутентификация
+const loginResponse = await authApi.login('username', 'password');
+const registerResponse = await authApi.register('username', 'password');
+const currentUser = await authApi.getCurrentUser();
 ```
 
 ## 🚀 Деплой
@@ -248,9 +310,9 @@ MIT License - см. файл [LICENSE](LICENSE)
 ## 📞 Контакты
 
 **Максим Щепетков**
-- Email: maksim.shchepetkov@example.com
-- LinkedIn: [linkedin.com/in/maksim-shchepetkov](https://linkedin.com/in/maksim-shchepetkov)
-- GitHub: [github.com/maksim-shchepetkov](https://github.com/maksim-shchepetkov)
+
+- Email: maksim.shchepetkov1995@gmail.com
+- GitHub: [github.com/maksim-shchepetkov](https://github.com/shchepetkov)
 - Telegram: [@David_Rizer](https://t.me/David_Rizer)
 
 ---

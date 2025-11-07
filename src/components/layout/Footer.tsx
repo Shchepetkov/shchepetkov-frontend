@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import { useTranslation } from '../../hooks/useTranslation';
+import type {FC} from 'react';
+import {useTranslation} from '../../hooks/useTranslation';
 
 const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
@@ -39,7 +39,7 @@ const Footer: FC = () => {
               </svg>
             </a>
             <a
-              href="mailto:maksim.shchepetkov1995@google.com"
+                href="mailto:maksim.shchepetkov1995@gmail.com"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               aria-label="Email"
             >

@@ -1,6 +1,6 @@
-import type { FC, FormEvent, ChangeEvent } from 'react';
-import { useState } from 'react';
-import { useTranslation } from '../hooks/useTranslation';
+import type {ChangeEvent, FC, FormEvent} from 'react';
+import {useState} from 'react';
+import {useTranslation} from '../hooks/useTranslation';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -66,7 +66,7 @@ const ContactPage: FC = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
-                  <p className="text-gray-600 dark:text-gray-400">maksim.shchepetkov1995@google.com</p>
+                  <p className="text-gray-600 dark:text-gray-400">maksim.shchepetkov1995@gmail.com</p>
                 </div>
               </div>
 
