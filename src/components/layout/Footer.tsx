@@ -39,7 +39,7 @@ const Footer: FC = () => {
               </svg>
             </a>
             <a
-              href="mailto:shchepetkov@example.com"
+              href="mailto:maksim.shchepetkov1995@google.com"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               aria-label="Email"
             >

@@ -128,7 +128,7 @@ const HomePage: FC = () => {
         </div>
       </section>
       
-      {/* Welcome Toast */}
+      {/* Добро пожаловать Toast */}
       {showWelcome && (
         <WelcomeToast onClose={() => setShowWelcome(false)} />
       )}

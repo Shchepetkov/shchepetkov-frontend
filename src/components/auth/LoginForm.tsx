@@ -1,4 +1,4 @@
-import type { FC, FormEvent } from 'react';
+import type { FC, FormEvent, ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -12,7 +12,7 @@ interface LoginFormProps {
 
 const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) => {
   console.log('=== LoginForm рендерится ===');
-  
+
   const { t } = useTranslation();
   const { login, isLoading, error, clearError } = useAuthContext();
   const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
