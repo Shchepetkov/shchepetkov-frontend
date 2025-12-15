@@ -14,11 +14,11 @@ const UserProfile: FC<UserProfileProps> = ({ className = '' }) => {
   if (user) {
     // Авторизованный пользователь
     return (
-      <div className={`flex items-center space-x-2 ${className}`}>
+      <div className={`flex items-center space-x-1 sm:space-x-2 ${className}`}>
         {/* Кнопка профиля - компактная версия */}
         <Link
           to="/profile"
-          className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-md hover:from-blue-600 hover:to-purple-700 transition-colors"
+          className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-md hover:from-blue-600 hover:to-purple-700 transition-colors"
           title={`${t('hello')}, ${user.name}`}
         >
           <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
@@ -26,7 +26,7 @@ const UserProfile: FC<UserProfileProps> = ({ className = '' }) => {
               {user.name.charAt(0).toUpperCase()}
             </span>
           </div>
-          <span className="text-sm font-medium">
+          <span className="hidden sm:inline text-sm font-medium">
             {user.name}
           </span>
         </Link>
@@ -34,11 +34,11 @@ const UserProfile: FC<UserProfileProps> = ({ className = '' }) => {
         {/* Кнопка выхода */}
         <button
           onClick={logout}
-          className="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+          className="px-2 sm:px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
           title={t('logout')}
         >
           <svg 
-            className="w-5 h-5" 
+            className="w-4 h-4 sm:w-5 sm:h-5" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"

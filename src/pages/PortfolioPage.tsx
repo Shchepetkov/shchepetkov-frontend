@@ -46,8 +46,8 @@ const PortfolioPage: FC = () => {
     {
       title: t('project5Title'),
       description: t('project5Description'),
-      technologies: ['JMeter', 'Java', 'Grafana', 'InfluxDB', 'Docker'],
-      image: '⚡',
+      technologies: ['Allure', 'Java', 'Log4j2', 'Gradle', 'Jenkins'],
+      image: '📊',
       link: '#',
       github: '#',
       status: 'completed'
@@ -64,24 +64,24 @@ const PortfolioPage: FC = () => {
   ];
   
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-12 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Заголовок */}
-                            <div className="text-center mb-16">
-                      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                        {t('portfolioTitle')}
-                      </h1>
-                      <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                        {t('portfolioSubtitle')}
-                      </p>
-                    </div>
+        <div className="text-center mb-12 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+            {t('portfolioTitle')}
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto px-4">
+            {t('portfolioSubtitle')}
+          </p>
+        </div>
 
         {/* Проекты */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {projectsData.map((project, index) => (
-            <Card key={index} hover className="relative overflow-hidden">
+            <Card key={index} hover className="relative overflow-hidden flex flex-col h-full">
               {/* Статус проекта */}
-              <div className="absolute top-4 right-4">
+              <div className="absolute top-4 right-4 z-10">
                 <span className={`px-2 py-1 text-xs rounded-full ${
                   project.status === 'completed' 
                     ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
@@ -92,22 +92,22 @@ const PortfolioPage: FC = () => {
               </div>
               
               {/* Изображение проекта */}
-              <div className="text-center mb-6">
-                <div className="text-6xl mb-4">{project.image}</div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="text-5xl sm:text-6xl mb-3 sm:mb-4">{project.image}</div>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4">
                   {project.description}
                 </p>
               </div>
               
               {/* Технологии */}
-              <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
                 {project.technologies.map((tech, techIndex) => (
                   <span
                     key={techIndex}
-                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full"
+                    className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs sm:text-sm rounded-full"
                   >
                     {tech}
                   </span>
@@ -115,7 +115,7 @@ const PortfolioPage: FC = () => {
               </div>
 
               {/* Ссылки */}
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 mt-auto">
                 <Button
                   variant="primary"
                   size="sm"
@@ -138,11 +138,11 @@ const PortfolioPage: FC = () => {
         </div>
 
         {/* Статистика */}
-        <section className="mt-20">
-          <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
+        <section className="mt-12 sm:mt-20">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900 dark:text-white mb-8 sm:mb-12">
             {t('statistics')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
             {[
               { number: '15+', label: t('completedProjects'), icon: '🎯' },
               { number: '50K+', label: t('automatedTests'), icon: '🧪' },

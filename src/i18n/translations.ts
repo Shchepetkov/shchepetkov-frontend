@@ -41,11 +41,11 @@ export const translations = {
     
     // About Page
     aboutTitle: 'О себе',
-    aboutSubtitle: 'Автоматизатор тестирования с 5+ лет опыта в создании надежных и масштабируемых фреймворков для тестирования',
+    aboutSubtitle: 'QA Automation Engineer / SDET с более чем 5-летним опытом в разработке и поддержке инфраструктуры автоматизированного тестирования',
     biography: 'Биография',
-    biographyText1: 'Я специализируюсь на создании идеальных фреймворков для UI и API тестирования, используя лучшие практики и современные технологии Java экосистемы.',
-    biographyText2: 'Мой подход основан на принципах SOLID архитектуры, чистом коде и модульности. Я создаю фреймворки, которые легко масштабируются, поддерживаются и интегрируются в CI/CD процессы.',
-    biographyText3: 'Специализируюсь на Cucumber + Gherkin для BDD, Page Object Model для UI тестирования, и REST-assured для API тестирования. Всегда использую Allure для красивой отчетности и Log4j2 для логирования.',
+    biographyText1: 'Я специализируюсь на разработке и внедрении фреймворков для автоматизированного тестирования с нуля (UI, API, микросервисы) на базе Java и Spring Boot. Работаю в банковском секторе, создавая отказоустойчивые и масштабируемые решения для распределённых систем.',
+    biographyText2: 'Имею опыт проектирования и реализации клиентов для работы с Apache Kafka, обеспечивающих взаимодействие между микросервисами. Провожу внутренние обучающие курсы по автоматизации тестирования и участвую в формировании команд, провёл более 400 технических собеседований.',
+    biographyText3: 'Мой подход основан на принципах чистой архитектуры, SOLID и модульности. Применяю различные методологии тестирования, включая BDD с Cucumber и Gherkin, создаю отказоустойчивые решения для интеграции с распределёнными системами. Настраиваю и оптимизирую процессы регрессионного тестирования в CI/CD (TeamCity, Jenkins), обеспечивая высокое качество и надёжность продуктов. Стек: Java, Spring Boot, Selenium, Selenide, RestAssured, Retrofit, Kafka, PostgreSQL, Docker.',
     keyPrinciples: 'Ключевые принципы',
     principle1: 'Чистая архитектура и SOLID принципы',
     principle2: 'Модульность и переиспользование кода',
@@ -54,27 +54,21 @@ export const translations = {
     principle5: 'Постоянное обучение новым технологиям',
     workExperience: 'Опыт работы',
     education: 'Образование',
-    bachelorDegree: 'Бакалавр компьютерных наук',
-    university: 'Московский технический университет',
-    specialization: 'Специализация: Программная инженерия и тестирование',
+    bachelorDegree: 'Прикладная информатика',
+    university: 'Саратовский национальный исследовательский государственный университет имени Н. Г. Чернышевского',
+    specialization: 'Механико-математический факультет',
 
     //Work experience
-    workExperienceTitle: 'Старший инженер по автоматизации тестирования',
-    workExperienceSubtitle: 'TechCorp',
-    workExperienceText: 'Создание фреймворков для UI и API тестирования, интеграция с CI/CD, менторинг команды',
-    timePeriod: '2023 - настоящее время',
+    workExperienceTitle: 'Ведущий инженер по автоматизированному тестированию',
+    workExperienceSubtitle: 'IBS',
+    workExperienceText: 'Разработка и внедрение с нуля фреймворков для автоматизированного тестирования (UI, API) на базе Java и Spring Boot для команд в банковском секторе. Проектирование и реализация клиента для работы с Apache Kafka. Проведение обучающих курсов, менторство, code review. Провёл более 400 технических собеседований. Настройка и оптимизация процессов регрессионного тестирования в CI/CD.',
+    timePeriod: 'Декабрь 2022 - настоящее время',
 
     //Work experience2
-    workExperienceTitle2: 'Инженер по автоматизации тестирования',
-    workExperienceSubtitle2: 'InnovationLab',
-    workExperienceText2: 'Разработка автоматизированных тестов, внедрение Cucumber + Gherkin, создание отчетов Allure',
-    timePeriod2: '2021 - 2023',
-
-    //Work experience3
-    workExperienceTitle3: 'Инженер по контролю качества',
-    workExperienceSubtitle3: 'StartupXYZ',
-    workExperienceText3: 'Ручное тестирование, первые шаги в автоматизации, изучение Selenium WebDriver',
-    timePeriod3: '2019 - 2021',
+    workExperienceTitle2: 'Ведущий инженер по автоматизированному тестированию',
+    workExperienceSubtitle2: 'ООО АНТАРА',
+    workExperienceText2: 'Разработка и сопровождение фреймворков, написание e2e и API тестов. Разработка микросервисов на Spring Boot для нужд автотестов (DataGenerator и DataProvider). Настройка регресса, Code Review, проведение лекций по автоматизации для стажёров.',
+    timePeriod2: 'Декабрь 2020 - Декабрь 2022',
 
     // Portfolio Page
     portfolioTitle: 'Портфолио проектов',
@@ -99,8 +93,8 @@ export const translations = {
     project4Title: 'Mobile Test Automation',
     project4Description: 'Фреймворк для автоматизации тестирования мобильных приложений с поддержкой Appium и различных платформ.',
     
-    project5Title: 'Performance Test Suite',
-    project5Description: 'Инструменты для нагрузочного тестирования с интеграцией JMeter и кастомными метриками.',
+    project5Title: 'Test Reporting & Analytics Framework',
+    project5Description: 'Фреймворк для генерации красивых отчетов Allure, интеграции с CI/CD и аналитики результатов тестирования.',
     
     project6Title: 'CI/CD Pipeline Framework',
     project6Description: 'Автоматизированные пайплайны для интеграции тестов в CI/CD процессы с поддержкой различных платформ.',
@@ -201,11 +195,11 @@ export const translations = {
     
     // About Page
     aboutTitle: 'About Me',
-    aboutSubtitle: 'Test automation engineer with 5+ years of experience in creating reliable and scalable testing frameworks',
+    aboutSubtitle: 'QA Automation Engineer / SDET with more than 5 years of experience in developing and maintaining test automation infrastructure',
     biography: 'Biography',
-    biographyText1: 'I specialize in creating perfect frameworks for UI and API testing using best practices and modern Java ecosystem technologies.',
-    biographyText2: 'My approach is based on SOLID architecture principles, clean code, and modularity. I create frameworks that are easily scalable, maintainable, and integrated into CI/CD processes.',
-    biographyText3: 'I specialize in Cucumber + Gherkin for BDD, Page Object Model for UI testing, and REST-assured for API testing. I always use Allure for beautiful reporting and Log4j2 for logging.',
+    biographyText1: 'I specialize in developing and implementing test automation frameworks from scratch (UI, API, microservices) based on Java and Spring Boot. Working in the banking sector, creating fault-tolerant and scalable solutions for distributed systems.',
+    biographyText2: 'I have experience in designing and implementing clients for working with Apache Kafka, ensuring interaction between microservices. Conduct internal training courses on test automation and participate in team building, conducted more than 400 technical interviews.',
+    biographyText3: 'My approach is based on clean architecture principles, SOLID and modularity. I apply various testing methodologies, including BDD with Cucumber and Gherkin, creating fault-tolerant solutions for integration with distributed systems. Setting up and optimizing regression testing processes in CI/CD (TeamCity, Jenkins), ensuring high quality and reliability of products. Stack: Java, Spring Boot, Selenium, Selenide, RestAssured, Retrofit, Kafka, PostgreSQL, Docker.',
     keyPrinciples: 'Key Principles',
     principle1: 'Clean architecture and SOLID principles',
     principle2: 'Modularity and code reusability',
@@ -214,27 +208,21 @@ export const translations = {
     principle5: 'Continuous learning of new technologies',
     workExperience: 'Work Experience',
     education: 'Education',
-    bachelorDegree: 'Bachelor of Computer Science',
-    university: 'Moscow Technical University',
-    specialization: 'Specialization: Software Engineering and Testing',
+    bachelorDegree: 'Applied Informatics',
+    university: 'Saratov State University named after N. G. Chernyshevsky',
+    specialization: 'Faculty of Mechanics and Mathematics',
 
     //Work experience
-    workExperienceTitle: 'Senior Test Automation Engineer',
-    workExperienceSubtitle: 'TechCorp',
-    workExperienceText: 'Creation of frameworks for UI and API testing, integration with CI/CD, mentoring of the team',
-    timePeriod: '2023 - now',
+    workExperienceTitle: 'Lead Test Automation Engineer',
+    workExperienceSubtitle: 'IBS',
+    workExperienceText: 'Development and implementation from scratch of test automation frameworks (UI, API) based on Java and Spring Boot for teams in the banking sector. Design and implementation of client for working with Apache Kafka. Conducting training courses, mentoring, code review. Conducted more than 400 technical interviews. Setting up and optimizing regression testing processes in CI/CD.',
+    timePeriod: 'December 2022 - present',
 
     //Work experience2
-    workExperienceTitle2: 'Test Automation Engineer',
-    workExperienceSubtitle2: 'InnovationLab',
-    workExperienceText2: 'Development of automated tests, implementation of Cucumber+ Gherkin, Allure report generation',
-    timePeriod2: '2021 - 2023',
-
-    //Work experience3
-    workExperienceTitle3: 'QA Engineer',
-    workExperienceSubtitle3: 'StartupXYZ',
-    workExperienceText3: 'Manual testing, first steps in automation, studying Selenium WebDriver',
-    timePeriod3: '2019 - 2021',
+    workExperienceTitle2: 'Lead Test Automation Engineer',
+    workExperienceSubtitle2: 'ANTARA LLC',
+    workExperienceText2: 'Development and maintenance of frameworks, writing e2e and API tests. Development of microservices on Spring Boot for test automation needs (DataGenerator and DataProvider). Setting up regression, Code Review, conducting lectures on automation for interns.',
+    timePeriod2: 'December 2020 - December 2022',
 
     // Portfolio Page
     portfolioTitle: 'Portfolio Projects',
@@ -259,8 +247,8 @@ export const translations = {
     project4Title: 'Mobile Test Automation',
     project4Description: 'Framework for automating mobile application testing with support for Appium and various platforms.',
     
-    project5Title: 'Performance Test Suite',
-    project5Description: 'Tools for load testing with JMeter integration and custom metrics.',
+    project5Title: 'Test Reporting & Analytics Framework',
+    project5Description: 'Framework for generating beautiful Allure reports, CI/CD integration, and test results analytics.',
     
     project6Title: 'CI/CD Pipeline Framework',
     project6Description: 'Automated pipelines for integrating tests into CI/CD processes with support for various platforms.',

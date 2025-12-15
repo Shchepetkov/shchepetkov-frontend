@@ -25,6 +25,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     const baseClasses = 'bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700';
     const hoverClasses = hover ? 'hover:shadow-xl hover:-translate-y-1 transition-all duration-300' : '';
     const gradientClasses = gradient ? 'bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700' : '';
+    const isFlex = className?.includes('flex flex-col') || className?.includes('flex-col');
 
     return (
       <div
@@ -51,7 +52,10 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
             )}
           </div>
         )}
-        <div className={cn('p-6', !title && !description && 'pt-6')}>
+        <div className={cn(
+          isFlex ? 'p-6 flex flex-col h-full' : 'p-6',
+          !title && !description && !isFlex && 'pt-6'
+        )}>
           {children}
         </div>
       </div>

@@ -11,40 +11,33 @@ const AboutPage: FC = () => {
       company: t('workExperienceSubtitle'),
       position: t('workExperienceTitle'),
       description: t('workExperienceText'),
-      technologies: ['Java', 'Selenium', 'Cucumber', 'REST-assured', 'Jenkins', 'Docker']
+      technologies: ['Java', 'Spring Boot', 'Selenium', 'Selenide', 'RestAssured', 'Retrofit', 'Kafka', 'PostgreSQL', 'Docker', 'JUnit', 'Cucumber', 'TeamCity', 'Jenkins', 'Allure']
     },
     {
       period: t('timePeriod2'),
       company: t('workExperienceSubtitle2'),
       position: t('workExperienceTitle2'),
       description: t('workExperienceText2'),
-      technologies: ['Java', 'Selenium', 'Cucumber', 'Allure', 'Maven', 'GitLab CI']
-    },
-    {
-      period: t('timePeriod3'),
-      company: t('workExperienceSubtitle3'),
-      position: t('workExperienceTitle3'),
-      description: t('workExperienceText3'),
-      technologies: ['Manual Testing', 'Selenium', 'Java', 'JUnit', 'TestNG']
+      technologies: ['Java', 'Spring Boot', 'Selenium', 'Selenide', 'Selenoid', 'RestAssured', 'Redis', 'JUnit', 'Jenkins', 'SQL', 'AngularJS']
     }
   ];
   
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-12 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Заголовок */}
-                            <div className="text-center mb-16">
-                      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                        {t('aboutTitle')}
-                      </h1>
-                      <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                        {t('aboutSubtitle')}
-                      </p>
-                    </div>
+        <div className="text-center mb-12 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+            {t('aboutTitle')}
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto px-4">
+            {t('aboutSubtitle')}
+          </p>
+        </div>
 
         {/* Биография */}
-        <section className="mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <section className="mb-12 sm:mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12 items-start">
             <Card title={t('biography')} className="h-fit">
               <div className="space-y-4 text-gray-600 dark:text-gray-400">
                 <p>
@@ -91,8 +84,8 @@ const AboutPage: FC = () => {
         </section>
 
         {/* Опыт работы */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <section className="mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center">
             {t('workExperience')}
           </h2>
           <div className="space-y-6">
@@ -131,7 +124,7 @@ const AboutPage: FC = () => {
 
         {/* Образование */}
         <section>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center">
             {t('education')}
           </h2>
           <Card>
@@ -148,7 +141,7 @@ const AboutPage: FC = () => {
                 </p>
               </div>
               <span className="text-gray-500 dark:text-gray-400 text-sm md:text-right mt-4 md:mt-0">
-                2015 - 2019
+                2018
               </span>
             </div>
           </Card>
