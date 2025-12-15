@@ -78,39 +78,49 @@ const HomePage: FC = () => {
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900 dark:text-white mb-8 sm:mb-12">
             {t('keySkills')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                         {[
-               {
-                 icon: '☕',
-                 title: t('javaDevelopment'),
-                 description: t('javaDescription')
-               },
-               {
-                 icon: '🧪',
-                 title: t('testAutomation'),
-                 description: t('testDescription')
-               },
-               {
-                 icon: '🌐',
-                 title: t('apiTesting'),
-                 description: t('apiDescription')
-               },
-               {
-                 icon: '📊',
-                 title: t('reporting'),
-                 description: t('reportingDescription')
-               },
-               {
-                 icon: '🔄',
-                 title: t('cicd'),
-                 description: t('cicdDescription')
-               },
-               {
-                 icon: '🏗️',
-                 title: t('architecture'),
-                 description: t('architectureDescription')
-               }
-             ].map((skill, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {[
+              {
+                icon: '☕',
+                title: t('javaDevelopment'),
+                description: t('javaDescription')
+              },
+              {
+                icon: '🧪',
+                title: t('testAutomation'),
+                description: t('testDescription')
+              },
+              {
+                icon: '🌐',
+                title: t('apiTesting'),
+                description: t('apiDescription')
+              },
+              {
+                icon: '⚡',
+                title: t('distributedSystems'),
+                description: t('distributedSystemsDescription')
+              },
+              {
+                icon: '📊',
+                title: t('reporting'),
+                description: t('reportingDescription')
+              },
+              {
+                icon: '🔄',
+                title: t('cicd'),
+                description: t('cicdDescription')
+              },
+              {
+                icon: '🗄️',
+                title: t('databases'),
+                description: t('databasesDescription')
+              },
+              {
+                icon: '🏗️',
+                title: t('architecture'),
+                description: t('architectureDescription')
+              }
+            ].map((skill, index) => (
               <div
                 key={index}
                 className="bg-gray-50 dark:bg-gray-800 p-4 sm:p-6 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
