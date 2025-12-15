@@ -57,26 +57,30 @@ const AboutPage: FC = () => {
               gradient 
               className="h-fit"
             >
-              <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  {t('principle1')}
+              <ul className="space-y-4 text-gray-700 dark:text-gray-300">
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3 mt-1">✓</span>
+                  <span>{t('principle1')}</span>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  {t('principle2')}
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3 mt-1">✓</span>
+                  <span>{t('principle2')}</span>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  {t('principle3')}
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3 mt-1">✓</span>
+                  <span>{t('principle3')}</span>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  {t('principle4')}
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3 mt-1">✓</span>
+                  <span>{t('principle4')}</span>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-3">✓</span>
-                  {t('principle5')}
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3 mt-1">✓</span>
+                  <span>{t('principle5')}</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3 mt-1">✓</span>
+                  <span>{t('principle6')}</span>
                 </li>
               </ul>
             </Card>
