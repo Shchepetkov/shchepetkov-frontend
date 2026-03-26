@@ -15,15 +15,12 @@ export const storage = {
       // Сохраняем в оба хранилища для надежности
       localStorage.setItem(key, JSON.stringify(value));
       sessionStorage.setItem(key, JSON.stringify(value));
-      console.log(`Сохранено в localStorage и sessionStorage: ${key}`);
     } catch (error) {
-      console.error('Error saving to storage:', error);
       // Если localStorage не работает, пробуем sessionStorage
       try {
         sessionStorage.setItem(key, JSON.stringify(value));
-        console.log(`Сохранено только в sessionStorage: ${key}`);
-      } catch (sessionError) {
-        console.error('Error saving to sessionStorage:', sessionError);
+      } catch {
+        // ignore storage write errors in private mode/restricted environments
       }
     }
   },
@@ -32,9 +29,8 @@ export const storage = {
     try {
       localStorage.removeItem(key);
       sessionStorage.removeItem(key);
-      console.log(`Удалено из localStorage и sessionStorage: ${key}`);
-    } catch (error) {
-      console.error('Error removing from storage:', error);
+    } catch {
+      // ignore storage removal errors
     }
   }
 };

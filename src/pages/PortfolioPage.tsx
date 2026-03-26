@@ -1,10 +1,22 @@
 import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import { fetchPublicRepos } from '../services/githubApi';
 
 const PortfolioPage: FC = () => {
   const { t } = useTranslation();
+  const [repos, setRepos] = useState<Array<{
+    id: number;
+    name: string;
+    html_url: string;
+    description: string | null;
+    stargazers_count: number;
+    language: string | null;
+    updated_at: string;
+  }>>([]);
+  const [reposError, setReposError] = useState<string | null>(null);
   
   const projectsData = [
     {
@@ -62,6 +74,44 @@ const PortfolioPage: FC = () => {
       status: 'completed'
     }
   ];
+
+  const casesData = [
+    {
+      title: t('case1Title'),
+      value: t('case1Value'),
+      metric: t('case1Metric'),
+      description: t('case1Description'),
+      icon: '⚡',
+    },
+    {
+      title: t('case2Title'),
+      value: t('case2Value'),
+      metric: t('case2Metric'),
+      description: t('case2Description'),
+      icon: '🧩',
+    },
+    {
+      title: t('case3Title'),
+      value: t('case3Value'),
+      metric: t('case3Metric'),
+      description: t('case3Description'),
+      icon: '🚀',
+    },
+  ];
+
+  useEffect(() => {
+    const loadRepos = async () => {
+      try {
+        const data = await fetchPublicRepos('shchepetkov', 4);
+        setRepos(data);
+        setReposError(null);
+      } catch {
+        setReposError(t('repositoriesUnavailable'));
+      }
+    };
+
+    loadRepos();
+  }, [t]);
   
   return (
     <div className="min-h-screen py-12 sm:py-20">
@@ -160,6 +210,85 @@ const PortfolioPage: FC = () => {
               </Card>
             ))}
           </div>
+        </section>
+
+        {/* Кейсы */}
+        <section className="mt-12 sm:mt-20">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              {t('casesTitle')}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              {t('casesSubtitle')}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {casesData.map((item, index) => (
+              <Card key={index} className="text-center hover">
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  {item.title}
+                </h3>
+                <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-1">
+                  {item.value}
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  {item.metric}
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {item.description}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* GitHub API */}
+        <section className="mt-12 sm:mt-20">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              {t('githubSectionTitle')}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              {t('githubSectionSubtitle')}
+            </p>
+          </div>
+
+          {reposError ? (
+            <Card>
+              <p className="text-center text-red-600 dark:text-red-400">{reposError}</p>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {repos.map((repo) => (
+                <Card key={repo.id} hover>
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {repo.name}
+                    </h3>
+                    <span className="text-sm text-yellow-600 dark:text-yellow-400">⭐ {repo.stargazers_count}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 min-h-[42px]">
+                    {repo.description || 'No description'}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
+                    <span>{repo.language || 'N/A'}</span>
+                    <span>
+                      {t('repositoryUpdated')}: {new Date(repo.updated_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => window.open(repo.html_url, '_blank')}
+                  >
+                    {t('viewRepository')}
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </div>

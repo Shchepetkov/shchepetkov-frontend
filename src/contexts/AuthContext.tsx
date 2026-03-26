@@ -12,6 +12,7 @@ interface AuthContextType {
   login: (username: string, password: string) => Promise<{ success: boolean; user?: User; error?: string }>;
   register: (username: string, password: string) => Promise<{ success: boolean; user?: User; error?: string }>;
   logout: () => Promise<void>;
+  updateUser: (partial: Partial<User>) => void;
   clearError: () => void;
 }
 

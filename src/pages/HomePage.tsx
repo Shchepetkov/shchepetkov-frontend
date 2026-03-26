@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTranslation } from '../hooks/useTranslation';
 import WelcomeToast from '../components/ui/WelcomeToast';
+import { generateResumePdf } from '../utils/resumePdf';
 
 const HomePage: FC = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [showWelcome, setShowWelcome] = useState(false);
+  const [isGeneratingResume, setIsGeneratingResume] = useState(false);
 
   // Показываем приветствие для авторизованных пользователей при первом заходе
   useEffect(() => {
@@ -20,6 +22,17 @@ const HomePage: FC = () => {
       }
     }
   }, [user]);
+
+  const handleDownloadResume = async () => {
+    if (isGeneratingResume) return;
+
+    setIsGeneratingResume(true);
+    try {
+      await generateResumePdf({ t, language });
+    } finally {
+      setIsGeneratingResume(false);
+    }
+  };
   
   return (
     <div className="min-h-screen">
@@ -42,8 +55,16 @@ const HomePage: FC = () => {
                 {t('heroDescription')}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <button className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm sm:text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                  {t('downloadResume')}
+                <button
+                  onClick={() => {
+                    void handleDownloadResume();
+                  }}
+                  disabled={isGeneratingResume}
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm sm:text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  {isGeneratingResume
+                    ? (language === 'ru' ? 'Генерация PDF...' : 'Generating PDF...')
+                    : t('downloadResume')}
                 </button>
                 <Link
                   to="/portfolio"

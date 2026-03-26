@@ -6,19 +6,13 @@ import AuthContainer from '../components/auth/AuthContainer';
 import WelcomeToast from '../components/ui/WelcomeToast';
 
 const AuthPage: FC = () => {
-  console.log('=== AuthPage рендерится ===');
-  
   const { isInitialized, isAuthenticated } = useAuthContext();
   const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(false);
-  
-  console.log('AuthPage state:', { isInitialized, isAuthenticated, showWelcome });
 
   // Если пользователь уже авторизован, перенаправляем на главную
   useEffect(() => {
-    console.log('AuthPage useEffect:', { isInitialized, isAuthenticated });
     if (isInitialized && isAuthenticated) {
-      console.log('Перенаправляем на главную');
       navigate('/', { replace: true });
     }
   }, [isInitialized, isAuthenticated, navigate]);

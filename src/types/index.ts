@@ -1,7 +1,13 @@
 export interface User {
-  id: string;
+  id: string | number;
+  username: string;
   name: string;
-  email: string;
+  email?: string;
+  fullName?: string;
+  location?: string;
+  bio?: string;
+  active?: boolean;
+  avatarPath?: string;
   avatar?: string;
   createdAt: string;
   updatedAt: string;
@@ -12,6 +18,33 @@ export interface AuthResponse {
   user?: User;
   token?: string;
   error?: string;
+}
+
+export interface AuthUserDto {
+  id: number;
+  username: string;
+  active: boolean;
+  avatarPath?: string;
+  fullName?: string;
+  email?: string;
+  location?: string;
+  bio?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface UpdateProfilePayload {
+  fullName?: string;
+  email?: string;
+  location?: string;
+  bio?: string;
+}
+
+export interface LoginApiResponse {
+  success: boolean;
+  message: string;
+  user?: AuthUserDto;
+  token?: string;
 }
 
 export interface RegisterApiResponse {

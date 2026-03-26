@@ -1,146 +1,347 @@
-import type { FC } from 'react';
+import type { ChangeEvent, FC } from 'react';
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useTranslation } from '../hooks/useTranslation';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import { extractApiErrorMessage, userApi } from '../services/api';
+
+interface ProfileFormState {
+  fullName: string;
+  email: string;
+  location: string;
+}
+
+const createFormState = (data: Partial<ProfileFormState>): ProfileFormState => ({
+  fullName: data.fullName || '',
+  email: data.email || '',
+  location: data.location || '',
+});
 
 const ProfilePage: FC = () => {
-  const { user, logout } = useAuthContext();
-  const { t } = useTranslation();
+  const { user, updateUser } = useAuthContext();
+  const { t, language } = useTranslation();
+  const [form, setForm] = useState<ProfileFormState>(createFormState({}));
+  const [savedForm, setSavedForm] = useState<ProfileFormState>(createFormState({}));
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isEditingPersonal, setIsEditingPersonal] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
 
   if (!user) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <Card className="max-w-md w-full mx-4">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Доступ запрещен
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Для просмотра профиля необходимо войти в систему
-            </p>
-            <Button
-              onClick={() => window.location.href = '/auth'}
-              className="w-full"
-            >
-              Войти в систему
-            </Button>
-          </div>
-        </Card>
-      </div>
-    );
+    return <Navigate to="/auth" replace />;
   }
 
+  const locale = language === 'ru' ? 'ru-RU' : 'en-US';
+  const displayName = user.fullName || user.name || user.username;
+  const loadErrorFallback = language === 'ru' ? 'Не удалось загрузить профиль' : 'Failed to load profile';
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadProfile = async () => {
+      setIsLoadingProfile(true);
+      setSaveError(null);
+      try {
+        const { data } = await userApi.getMyProfile();
+        if (!isMounted) return;
+
+        const serverProfile = createFormState({
+          fullName: data.fullName || data.username,
+          email: data.email,
+          location: data.location,
+        });
+        setForm(serverProfile);
+        setSavedForm(serverProfile);
+        updateUser({
+          name: data.fullName || data.username,
+          fullName: data.fullName,
+          email: data.email || '',
+          location: data.location,
+          createdAt: data.createdAt || user.createdAt,
+          updatedAt: data.updatedAt || user.updatedAt,
+        });
+      } catch (error: any) {
+        if (!isMounted) return;
+        const fallbackForm = createFormState({
+          fullName: user.fullName || user.name || user.username,
+          email: user.email,
+          location: user.location,
+        });
+        setForm(fallbackForm);
+        setSavedForm(fallbackForm);
+        setSaveError(extractApiErrorMessage(error, loadErrorFallback));
+      } finally {
+        if (isMounted) {
+          setIsLoadingProfile(false);
+        }
+      }
+    };
+
+    loadProfile();
+    return () => {
+      isMounted = false;
+    };
+  }, [user.id, language]);
+
+  const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString(locale, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+
+  const isDirty =
+    form.fullName !== savedForm.fullName ||
+    form.email !== savedForm.email ||
+    form.location !== savedForm.location;
+
+  const handleChange =
+    (field: keyof ProfileFormState) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => ({ ...prev, [field]: event.target.value }));
+      if (saveSuccess) setSaveSuccess(null);
+      if (saveError) setSaveError(null);
+    };
+
+  const handleSavePersonalInfo = async () => {
+    setSaveError(null);
+    setSaveSuccess(null);
+    setIsSaving(true);
+
+    try {
+      const { data } = await userApi.updateMyProfile({
+        fullName: form.fullName,
+        email: form.email,
+        location: form.location,
+      });
+
+      updateUser({
+        name: data.fullName || data.username,
+        fullName: data.fullName,
+        email: data.email || '',
+        location: data.location,
+        updatedAt: data.updatedAt || new Date().toISOString(),
+      });
+      const nextSavedForm = createFormState({
+        fullName: data.fullName || data.username,
+        email: data.email,
+        location: data.location,
+      });
+      setForm(nextSavedForm);
+      setSavedForm(nextSavedForm);
+      setSaveSuccess(t('profileSavedSuccess'));
+      setIsEditingPersonal(false);
+    } catch (error: any) {
+      setSaveError(extractApiErrorMessage(error, t('profileSaveError')));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleStartEditing = () => {
+    setIsEditingPersonal(true);
+    setSaveError(null);
+    setSaveSuccess(null);
+  };
+
+  const handleCancelEditing = () => {
+    setForm(savedForm);
+    setIsEditingPersonal(false);
+    setSaveError(null);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Заголовок */}
-        <div className="text-center mb-12">
-          <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="text-center mb-10">
+          <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
             <span className="text-3xl font-bold text-white">
-              {user.name.charAt(0).toUpperCase()}
+              {displayName.charAt(0).toUpperCase()}
             </span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
             {t('profile')}
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
-            {t('hello')}, {user.name}!
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400">
+            {t('welcomeBack', { name: displayName })}
+          </p>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            {t('profileSubtitle')}
           </p>
         </div>
 
-        {/* Информация о пользователе */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Личная информация
+              {t('profilePersonalInfo')}
             </h3>
-            <div className="space-y-3">
-              <div>
-                <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Имя пользователя
-                </label>
-                <p className="text-gray-900 dark:text-white font-medium">
-                  {user.name}
-                </p>
+            {isLoadingProfile ? (
+              <p className="text-sm text-gray-600 dark:text-gray-400">{t('profileLoading')}</p>
+            ) : (
+              <div className="space-y-3">
+                <div>
+                  <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {t('profileDisplayName')}
+                  </label>
+                  {isEditingPersonal ? (
+                    <input
+                      type="text"
+                      value={form.fullName}
+                      onChange={handleChange('fullName')}
+                      className="mt-1 w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="text-gray-900 dark:text-white font-medium">
+                      {displayName}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {t('profileUserName')}
+                  </label>
+                  <p className="text-gray-900 dark:text-white font-medium">
+                    {user.username}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {t('profileEmail')}
+                  </label>
+                  {isEditingPersonal ? (
+                    <input
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange('email')}
+                      className="mt-1 w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="name@email.com"
+                    />
+                  ) : (
+                    <p className="text-gray-900 dark:text-white font-medium">
+                      {user.email || t('profileNoEmail')}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {t('profileLocation')}
+                  </label>
+                  {isEditingPersonal ? (
+                    <input
+                      type="text"
+                      value={form.location}
+                      onChange={handleChange('location')}
+                      className="mt-1 w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder={t('profileLocationPlaceholder')}
+                    />
+                  ) : (
+                    <p className="text-gray-900 dark:text-white font-medium">
+                      {user.location || t('profileNoLocation')}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {t('profileId')}
+                  </label>
+                  <p className="text-gray-900 dark:text-white font-medium font-mono text-sm">
+                    {user.id}
+                  </p>
+                </div>
               </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Email
-                </label>
-                <p className="text-gray-900 dark:text-white font-medium">
-                  {user.email}
-                </p>
+            )}
+
+            {!isLoadingProfile && (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {isEditingPersonal ? (
+                  <>
+                    <Button
+                      onClick={handleSavePersonalInfo}
+                      loading={isSaving}
+                      disabled={!isDirty || isSaving}
+                    >
+                      {isSaving ? t('profileSaving') : t('profileSave')}
+                    </Button>
+                    <Button
+                      onClick={handleCancelEditing}
+                      variant="secondary"
+                      disabled={isSaving}
+                    >
+                      {t('profileCancel')}
+                    </Button>
+                  </>
+                ) : (
+                  <Button onClick={handleStartEditing} variant="outline">
+                    {t('profileEdit')}
+                  </Button>
+                )}
               </div>
-              <div>
-                <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  ID пользователя
-                </label>
-                <p className="text-gray-900 dark:text-white font-medium font-mono text-sm">
-                  {user.id}
-                </p>
+            )}
+
+            {(saveError || saveSuccess) && (
+              <div className="mt-4">
+                {saveError && (
+                  <div className="rounded-md bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300 px-3 py-2 text-sm">
+                    {saveError}
+                  </div>
+                )}
+                {saveSuccess && (
+                  <div className="rounded-md bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300 px-3 py-2 text-sm">
+                    {saveSuccess}
+                  </div>
+                )}
               </div>
-            </div>
+            )}
           </Card>
 
           <Card>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Статистика аккаунта
+              {t('profileAccountInfo')}
             </h3>
             <div className="space-y-3">
               <div>
                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Дата регистрации
+                  {t('profileRegisteredAt')}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
-                  {new Date(user.createdAt).toLocaleDateString('ru-RU', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
+                  {formatDate(user.createdAt)}
                 </p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Последнее обновление
+                  {t('profileUpdatedAt')}
                 </label>
                 <p className="text-gray-900 dark:text-white font-medium">
-                  {new Date(user.updatedAt).toLocaleDateString('ru-RU', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
+                  {formatDate(user.updatedAt)}
                 </p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Статус
+                  {t('profileStatus')}
                 </label>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
-                  Активный
+                <span
+                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                    user.active !== false
+                      ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                      : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  {user.active !== false ? t('profileStatusActive') : t('profileStatusInactive')}
                 </span>
               </div>
             </div>
           </Card>
         </div>
 
-        {/* Действия */}
-        <div className="text-center">
-          <Button
-            onClick={logout}
-            className="bg-red-600 hover:bg-red-700 text-white px-8 py-3"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            {t('logout')}
-          </Button>
-        </div>
+        <Card className="mb-6">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {t('profileSecurityHint')}
+          </p>
+        </Card>
+
       </div>
     </div>
   );

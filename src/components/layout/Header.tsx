@@ -37,12 +37,12 @@ const Header: FC = () => {
           </Link>
 
           {/* Навигация для десктопа */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-3 xl:gap-6 mx-2 lg:mx-6">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-colors ${
                   location.pathname === item.path
                     ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
                     : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'

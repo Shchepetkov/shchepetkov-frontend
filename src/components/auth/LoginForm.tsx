@@ -11,42 +11,20 @@ interface LoginFormProps {
 }
 
 const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) => {
-  console.log('=== LoginForm рендерится ===');
-
   const { t } = useTranslation();
   const { login, isLoading, error, clearError } = useAuthContext();
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   });
-  
-  console.log('LoginForm props:', { onSwitchToRegister, onAuthSuccess });
-  console.log('LoginForm state:', { formData, isLoading, error });
-
   const handleSubmit = async (e: FormEvent) => {
-    console.log('=== ФОРМА ОТПРАВЛЕНА ===');
-    console.log('Form data:', formData);
-    console.log('Event:', e);
-    
     e.preventDefault();
     e.stopPropagation();
-    
-    console.log('После preventDefault');
     clearError();
 
-    console.log('Вызываем функцию login...');
-    try {
-      const result = await login(formData.username, formData.password);
-      console.log('Результат login:', result);
-      
-      if (result.success && result.user) {
-        console.log('Успешный вход, вызываем onAuthSuccess');
-        onAuthSuccess();
-      } else {
-        console.log('Неуспешный вход:', result.error);
-      }
-    } catch (error) {
-      console.error('Ошибка в handleSubmit:', error);
+    const result = await login(formData.username, formData.password);
+    if (result.success && result.user) {
+      onAuthSuccess();
     }
   };
 
@@ -120,7 +98,6 @@ const LoginForm: FC<LoginFormProps> = ({ onSwitchToRegister, onAuthSuccess }) =>
             loading={isLoading}
             disabled={isLoading}
             fullWidth
-            onClick={() => console.log('Кнопка нажата')}
           >
             {isLoading ? t('loggingIn') : t('loginButton')}
           </Button>
